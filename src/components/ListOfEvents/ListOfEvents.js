@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import HomeHeader from "../HomeHeader/HomeHeader";
+import Header from "../HomeHeader/HomeHeader";
 
 export default class List extends Component {
   showParks = () => {
@@ -26,7 +26,7 @@ export default class List extends Component {
     // console.log(this.props.listOfParks)
     return (
       <div>
-        <HomeHeader />
+        <Header />
         <h1>List of Parks</h1>
         {this.showParks()}
       </div>

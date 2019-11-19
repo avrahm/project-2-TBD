@@ -8,18 +8,21 @@ export default class Header extends Component {
 
     return (
       <div className={"container"}>
-      <Link to="/singleevent/">
+      <Link to="/ironrest/" className="btn btn-lg btn-outline-info">
+      <h3>Ironrest</h3>
+      </Link><br />
+      <Link to="/singleevent/" className="btn btn-lg btn-outline-danger">
       <h3>Single Event</h3>
-      </Link>
-        <Link to="/listpark/">
+      </Link><br />
+        <Link to="/listpark/" className="btn btn-lg btn-outline-success">
         <h3>List of Parks</h3>
-        </Link>
-        <Link to="/randompark/">
+        </Link><br />
+        <Link to="/randompark/" className="btn btn-lg btn-outline-success">
         <h3>Random Park</h3>
-        </Link>
-        <Link to="/new/">
+        </Link><br />
+        <Link to="/new/" className="btn btn-lg btn-outline-danger">
         <h3>Add a Event</h3>
-        </Link>
+        </Link><br />
       </div>
     );
   }

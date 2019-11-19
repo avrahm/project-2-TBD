@@ -1,5 +1,5 @@
 import React from "react";
-import HomeHeader from "../HomeHeader/HomeHeader";
+import Header from "../HomeHeader/HomeHeader";
 
 function Single(props) {
   // console.log(props.listOfParks)
@@ -17,7 +17,7 @@ function Single(props) {
 
   return (
     <div>
-      <HomeHeader />
+      <Header />
       <div className="container d-flex flex-column">
         <div>
           {/* <img src={thePark.attributes.iD} alt={thePark.name} width="100px" /> */}
@@ -26,6 +26,8 @@ function Single(props) {
           <h1>{thePark.attributes.NAME}</h1>
           <h3 className="tagline">Address: {thePark.attributes.ADDRESS}</h3>
           <p>Phone: {thePark.attributes.PHONE}</p>
+          <p>Latitude: {thePark.attributes.LAT}</p>
+          <p>Longitude: {thePark.attributes.LON}</p>
         </div>
       </div>
     </div>

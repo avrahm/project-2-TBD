@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import HomeHeader from "../HomeHeader/HomeHeader";
+import Header from "../HomeHeader/HomeHeader";
 
-export default class AddNewPark extends Component {
+export default class AddNewEvent extends Component {
   constructor() {
     super();
     this.state = {
@@ -28,19 +28,19 @@ export default class AddNewPark extends Component {
   submitNewPark = e => {
     e.preventDefault();
 
-    const park = {
-      name: this.state.name,
-      tagline: this.state.tagline,
-      description: this.state.description,
-      first_brewed: this.state.first_brewed,
-      brewers_tips: this.state.brewers_tips,
-      attenuation_level: this.state.attenuation_level,
-      contributed_by: this.state.contributed_by
-    }
+    // const park = {
+    //   name: this.state.name,
+    //   tagline: this.state.tagline,
+    //   description: this.state.description,
+    //   first_brewed: this.state.first_brewed,
+    //   brewers_tips: this.state.brewers_tips,
+    //   attenuation_level: this.state.attenuation_level,
+    //   contributed_by: this.state.contributed_by
+    // }
     
-    console.log(park)
+    // console.log(park)
 
-    Axios.post("", park)
+    Axios.post("http://ironrest.herokupp.com/createCollection/avrahm")
     .then(res => {
       console.log(res)
       this.setState({
@@ -58,7 +58,7 @@ export default class AddNewPark extends Component {
   render() {
     return (
       <div>
-      <HomeHeader />
+      <Header />
       <h1>{this.state.message}</h1>
         <form className="container" onSubmit={this.submitNewPark}>
           <label htmlFor="name">Name</label>
