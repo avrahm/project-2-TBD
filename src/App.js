@@ -10,7 +10,7 @@ import Header from "./components/Header/Header";
 import axios from "axios";
 import SingleEvent from "./components/SingleEvent/SingleEvent";
 import { myHistory } from './index.js';
-import map from "./components/map"
+import Map from "./components/Map"
 
 
 class App extends Component {
@@ -142,11 +142,12 @@ class App extends Component {
             <Route
               exact
               path="/map/"
+              // component={Map}
               render={props => (
-                <map
+                <Map
                   {...props}
                   listOfParks={this.state.theParksFromMiamiDade}
-                  ready={this.state.ready}
+                  // ready={this.state.ready}
                 />
               )}
             />
