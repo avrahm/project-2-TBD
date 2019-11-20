@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Header from "../HomeHeader/HomeHeader";
+// import Header from "../Header/Header";
 
 export default class List extends Component {
   showParks = () => {
@@ -24,12 +24,14 @@ export default class List extends Component {
   };
   render() {
     // console.log(this.props.listOfParks)
-    return (
-      <div>
-        <Header />
-        <h1>List of Parks</h1>
-        {this.showParks()}
-      </div>
-    );
+    if (this.props.listOfParks)
+      return (
+        <div>
+          {/* <Header /> */}
+          <h1>List of Parks</h1>
+          {this.showParks()}
+        </div>
+      );
+    else return <div>loading...</div>;
   }
 }

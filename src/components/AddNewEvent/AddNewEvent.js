@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import Header from "../HomeHeader/HomeHeader";
+// import Header from "../HomeHeader/HomeHeader";
 
 export default class AddNewEvent extends Component {
   constructor() {
@@ -8,12 +8,12 @@ export default class AddNewEvent extends Component {
     this.state = {
       
         name: "",
-        tagline: "",
+        address: "",
         description: "",
-        first_brewed: "",
-        brewers_tips: "",
-        attenuation_level: 0,
-        contributed_by: "",
+        sport: "",
+        date: "",
+        time: "",
+        user: "",
         message: ""
       
     };
@@ -25,42 +25,55 @@ export default class AddNewEvent extends Component {
     });
   };
 
-  submitNewPark = e => {
-    e.preventDefault();
+  // submitNewEvent = e => {
+  //   e.preventDefault();
 
-    // const park = {
-    //   name: this.state.name,
-    //   tagline: this.state.tagline,
-    //   description: this.state.description,
-    //   first_brewed: this.state.first_brewed,
-    //   brewers_tips: this.state.brewers_tips,
-    //   attenuation_level: this.state.attenuation_level,
-    //   contributed_by: this.state.contributed_by
-    // }
+  //   const event = { 
+  //     name: this.state.name,
+  //     address: this.state.address,
+  //     description: this.state.description,
+  //     sport: this.state.sport,
+  //     date: this.state.date,
+  //     time: this.state.time,
+  //     user: this.state.user
+  //   }
     
-    // console.log(park)
-
-    Axios.post("http://ironrest.herokupp.com/createCollection/avrahm")
-    .then(res => {
-      console.log(res)
-      this.setState({
-        message: "Posted Successfully"
-      })
-    })
-    .catch(err => {
-      console.error(err)
-      this.setState({
-        message: "Error!"
-      })
-    })
-  };
+  
+    
+  //   Axios.post("https://ironrest.herokuapp.com/avrahm", {event: {event}})
+  //   .then(res => {
+  //     // console.log(event)
+  //     // console.log(res)
+  //     this.setState({
+  //       message: "Posted Successfully"
+  //     })
+  //   })
+  //   .catch(err => {
+  //     // console.error(err)
+  //     this.setState({
+  //       message: "Error!"
+  //     })
+  //   })
+  // };
 
   render() {
     return (
       <div>
-      <Header />
-      <h1>{this.state.message}</h1>
-        <form className="container" onSubmit={this.submitNewPark}>
+      {/* <Header /> */}
+      <h1>{this.props.message}</h1>
+        <form className="container" onSubmit={e => {
+            this.props.submitEventFunction(
+              e,
+              this.state.name,
+              this.state.address,
+              this.state.description,
+              this.state.sport,
+              this.state.date,
+              this.state.time,
+              this.state.user
+            );
+            console.log(this.props)
+          }}>
           <label htmlFor="name">Name</label>
           <input
             className="form-control"
@@ -69,13 +82,13 @@ export default class AddNewEvent extends Component {
             onChange={this.handleInput}
             value={this.state.name}
           />
-          <label htmlFor="tagline">Tagline</label>
+          <label htmlFor="address">Address</label>
           <input
             className="form-control"
             type="text"
-            name="tagline"
+            name="address"
             onChange={this.handleInput}
-            value={this.state.tagline}
+            value={this.state.address}
           />
           <label htmlFor="description">Description</label>
           <textarea
@@ -86,37 +99,37 @@ export default class AddNewEvent extends Component {
             onChange={this.handleInput}
             value={this.state.description}
           ></textarea>
-          <label htmlFor="first_brewed">First Brewed</label>
+          <label htmlFor="sport">Sport</label>
           <input
             className="form-control"
             type="text"
-            name="first_brewed"
+            name="sport"
             onChange={this.handleInput}
-            value={this.state.first_brewed}
+            value={this.state.sport}
           />
-          <label htmlFor="brewers_tips">Brewers Tips</label>
+          <label htmlFor="date">Date</label>
           <input
             className="form-control"
             type="text"
-            name="brewers_tips"
+            name="date"
             onChange={this.handleInput}
-            value={this.state.brewers_tips}
+            value={this.state.date}
           />
-          <label htmlFor="attenuation_level">Attenuation</label>
-          <input
-            className="form-control"
-            type="number"
-            name="attenuation_level"
-            onChange={this.handleInput}
-            value={this.state.attenuation_level}
-          />
-          <label htmlFor="contributed_by">Contributed By</label>
+          <label htmlFor="time">Time</label>
           <input
             className="form-control"
             type="text"
-            name="contributed_by"
+            name="time"
             onChange={this.handleInput}
-            value={this.state.contributed_by}
+            value={this.state.time}
+          />
+          <label htmlFor="user">User</label>
+          <input
+            className="form-control"
+            type="text"
+            name="user"
+            onChange={this.handleInput}
+            value={this.state.user}
           />
           <button className="button btn-lg">Submit</button>
         </form>

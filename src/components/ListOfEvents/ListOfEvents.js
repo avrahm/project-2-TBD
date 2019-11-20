@@ -1,35 +1,70 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Header from "../HomeHeader/HomeHeader";
+// import Header from "../Header/Header";
+import Axios from 'axios'
 
-export default class List extends Component {
-  showParks = () => {
-    return this.props.listOfParks.map((eachPark, i) => {
-      // console.log(eachPark.attributes.ID)
+export default class ListOfEvents extends Component {
+constructor(){
+  super()
+  this.state = {
+    // listOfEvents: {...this.props.listOfEvents}
+  }
+}
+  deleteEvent = (e) => {
+   let deleteId = e.target.name
+    Axios.delete('https://ironrest.herokuapp.com/avrahm/'+ deleteId)
+    .then(res=>{
+      console.log('deleted')
+      // this.setState({
+      //   listOfEvents: res})
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    
+    // console.log(e.target.name)
+  }
+
+  showEvents = () => {
+    console.log(this.props.listOfEvents)
+    return this.props.listOfEvents.map((eachEvent, i) => {
+      // console.log(eachEvent)
+
       return (
         <div className="container d-flex flex-row" key={i}>
           {/* <div className="col-4">
-            <img src={eachPark.fac} alt={eachPark.name} height="100px" />
+            <img src={eachEvent.fac} alt={eachEvent.name} height="100px" />
           </div> */}
           <div className="col-8">
-            <Link to={"/single/" + eachPark.attributes.ID}>
-              <h4 className="name">{eachPark.attributes.NAME}</h4>
-            </Link>
-            Address: {eachPark.attributes.ADDRESS}
-            <p className="contributor">Phone: {eachPark.attributes.PHONE}</p>
+            <Link to={"/singleevent/" + eachEvent._id}>
+              <h4 className="name">{eachEvent.event.name}</h4></Link><button name={eachEvent._id} onClick={this.deleteEvent}>delete</button>
+            
+            {/* Date: {eachEvent[i].date} */}
+            {/* <p className="contributor">Phone: {eachEvent.PHONE}</p> */}
           </div>
         </div>
       );
     });
   };
+
+
+
   render() {
-    // console.log(this.props.listOfParks)
+    // console.log(this.props.listOfEvents)
+    // console.log(this.props.listOfEvents)
+    if(this.props.ready)
     return (
+
       <div>
-        <Header />
-        <h1>List of Parks</h1>
-        {this.showParks()}
+        {/* <Header /> */}
+
+        <h1>List of Events</h1>
+
+        {this.showEvents()}
+
       </div>
-    );
+    )
+    else
+    return(<div>Loading...</div>)
   }
 }
