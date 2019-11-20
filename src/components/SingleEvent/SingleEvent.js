@@ -27,7 +27,7 @@ class SingleEvent extends React.Component {
           {/* <Header /> */}
           <img src={images[theEvent.img]} alt={theEvent.title} height="200px" />
           <h1>Title: {theEvent.title}</h1>
-          <h2>Address: {theEvent.address}</h2>
+          <h2>Location: {theEvent.location}</h2>
           <h2>Description: {theEvent.description}</h2>
           <h2>Sport: {theEvent.sport}</h2>
           <h2>Date: {theEvent.date}</h2>

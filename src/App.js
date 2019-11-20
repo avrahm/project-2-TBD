@@ -10,8 +10,8 @@ import Header from "./components/Header/Header";
 import axios from "axios";
 import SingleEvent from "./components/SingleEvent/SingleEvent";
 import { myHistory } from './index.js';
+import map from "./components/map"
 
-console.log('cool!!!')
 
 class App extends Component {
   state = {
@@ -19,6 +19,7 @@ class App extends Component {
     theEventsFromIronrest: null,
     ready: false,
     message: '',
+    sports: ["soccer", "basketball", "yoga"],
   };
   componentDidMount() {
     //Miami Dade Parks and Recs JSON API
@@ -138,6 +139,17 @@ class App extends Component {
                 />
               )}
             />
+            <Route
+              exact
+              path="/map/"
+              render={props => (
+                <map
+                  {...props}
+                  listOfParks={this.state.theParksFromMiamiDade}
+                  ready={this.state.ready}
+                />
+              )}
+            />
             <Route exact path="/singleevent/:id" render={props => (
                 <SingleEvent
                   {...props}
@@ -152,6 +164,7 @@ class App extends Component {
                   // listOfEvents={this.state.theEventsFromIronrest}
                   message={this.state.message}
                   submitEventFunction={this.submitNewEvent} 
+                  sports={this.state.sports}
                 />
               )} />
           </Switch>

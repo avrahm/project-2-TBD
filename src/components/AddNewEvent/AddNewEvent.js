@@ -7,13 +7,13 @@ export default class AddNewEvent extends Component {
     super();
     this.state = {
       sports: ["soccer", "basketball", "yoga"],
-      title: "Event" + Math.floor(Math.random() * 1000),
-      location: "12345 sw 254th St",
+      title: "Event " + Math.floor(Math.random() * 1000),
+      location: Math.floor(Math.random() * 20000) + " SW "+ Math.floor(Math.random() * 200) + " St",
       description: "This is the description",
       sport: "",
-      date: "10-10-19",
-      time: "12:15pm",
-      user: "User" + Math.floor(Math.random() * 1000),
+      date: Math.floor(Math.random() * 11+1)+'/'+Math.floor(Math.random() * 28+1)+'/2020',
+      time: Math.floor(Math.random() * 11+1) + ':' + Math.floor(Math.random() * 60+1),
+      user: "User " + Math.floor(Math.random() * 1000),
       message: ""
     };
   }
@@ -75,7 +75,7 @@ export default class AddNewEvent extends Component {
             type="text"
             name="sport"
             onChange={this.handleInput}
-            defaultValue={this.state.sports[Math.floor(Math.random() * 5)]}
+            value={this.state.sports[Math.floor(Math.random() * 5)]}
             // {this.state.sport}
           />
           <label htmlFor="date">Date</label>
