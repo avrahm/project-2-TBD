@@ -1,21 +1,20 @@
 import React, { Component } from "react";
-import Axios from "axios";
+// import Axios from "axios";
 // import Header from "../HomeHeader/HomeHeader";
 
 export default class AddNewEvent extends Component {
   constructor() {
     super();
     this.state = {
-      
-        name: "",
-        address: "",
-        description: "",
-        sport: "",
-        date: "",
-        time: "",
-        user: "",
-        message: ""
-      
+      sports: ["soccer", "basketball", "yoga"],
+      title: "Event" + Math.floor(Math.random() * 1000),
+      location: "12345 sw 254th St",
+      description: "This is the description",
+      sport: "",
+      date: "10-10-19",
+      time: "12:15pm",
+      user: "User" + Math.floor(Math.random() * 1000),
+      message: ""
     };
   }
   handleInput = e => {
@@ -25,69 +24,41 @@ export default class AddNewEvent extends Component {
     });
   };
 
-  // submitNewEvent = e => {
-  //   e.preventDefault();
-
-  //   const event = { 
-  //     name: this.state.name,
-  //     address: this.state.address,
-  //     description: this.state.description,
-  //     sport: this.state.sport,
-  //     date: this.state.date,
-  //     time: this.state.time,
-  //     user: this.state.user
-  //   }
-    
-  
-    
-  //   Axios.post("https://ironrest.herokuapp.com/avrahm", {event: {event}})
-  //   .then(res => {
-  //     // console.log(event)
-  //     // console.log(res)
-  //     this.setState({
-  //       message: "Posted Successfully"
-  //     })
-  //   })
-  //   .catch(err => {
-  //     // console.error(err)
-  //     this.setState({
-  //       message: "Error!"
-  //     })
-  //   })
-  // };
-
   render() {
     return (
       <div>
-      {/* <Header /> */}
-      <h1>{this.props.message}</h1>
-        <form className="container" onSubmit={e => {
+        {/* <Header /> */}
+        <h1>{this.props.message}</h1>
+        <form
+          className="container"
+          onSubmit={e => {
             this.props.submitEventFunction(
               e,
-              this.state.name,
-              this.state.address,
+              this.state.title,
+              this.state.location,
               this.state.description,
-              this.state.sport,
+              this.state.sports[Math.floor(Math.random() * 4)],
               this.state.date,
               this.state.time,
               this.state.user
             );
-          }}>
-          <label htmlFor="name">Name</label>
+          }}
+        >
+          <label htmlFor="title">title</label>
           <input
             className="form-control"
             type="text"
-            name="name"
+            name="title"
             onChange={this.handleInput}
-            value={this.state.name}
+            defaultValue={this.state.title}
           />
-          <label htmlFor="address">Address</label>
+          <label htmlFor="location">Location ID</label>
           <input
             className="form-control"
             type="text"
-            name="address"
+            name="location"
             onChange={this.handleInput}
-            value={this.state.address}
+            defaultValue={this.state.location}
           />
           <label htmlFor="description">Description</label>
           <textarea
@@ -96,7 +67,7 @@ export default class AddNewEvent extends Component {
             name="description"
             height="100px"
             onChange={this.handleInput}
-            value={this.state.description}
+            defaultValue={this.state.description}
           ></textarea>
           <label htmlFor="sport">Sport</label>
           <input
@@ -104,7 +75,8 @@ export default class AddNewEvent extends Component {
             type="text"
             name="sport"
             onChange={this.handleInput}
-            value={this.state.sport}
+            defaultValue={this.state.sports[Math.floor(Math.random() * 5)]}
+            // {this.state.sport}
           />
           <label htmlFor="date">Date</label>
           <input
@@ -112,7 +84,7 @@ export default class AddNewEvent extends Component {
             type="text"
             name="date"
             onChange={this.handleInput}
-            value={this.state.date}
+            defaultValue={this.state.date}
           />
           <label htmlFor="time">Time</label>
           <input
@@ -120,7 +92,7 @@ export default class AddNewEvent extends Component {
             type="text"
             name="time"
             onChange={this.handleInput}
-            value={this.state.time}
+            defaultValue={this.state.time}
           />
           <label htmlFor="user">User</label>
           <input
@@ -128,7 +100,7 @@ export default class AddNewEvent extends Component {
             type="text"
             name="user"
             onChange={this.handleInput}
-            value={this.state.user}
+            defaultValue={this.state.user}
           />
           <button className="button btn-lg">Submit</button>
         </form>

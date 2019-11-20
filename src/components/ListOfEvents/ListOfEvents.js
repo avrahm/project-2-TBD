@@ -1,29 +1,36 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
-import Axios from 'axios'
+import Axios from "axios";
+function importAll(r) {
+  let images = {};
+   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
+
+const images = importAll(require.context('../../images', false, /\.(png|jpe?g|svg)$/));
 
 export default class ListOfEvents extends Component {
-constructor(){
-  super()
-  this.state = {
-    // listOfEvents: {...this.props.listOfEvents}
+  constructor() {
+    super();
+    this.state = {
+      // listOfEvents: {...this.props.listOfEvents}
+    };
   }
-}
-  deleteEvent = (e) => {
-   let deleteId = e.target.name
-    Axios.delete('https://ironrest.herokuapp.com/avrahm/'+ deleteId)
-    .then(res=>{
-      console.log('deleted')
-      // this.setState({
-      //   listOfEvents: res})
+  deleteEvent = e => {
+    let deleteId = e.target.name;
+    Axios.delete("https://ironrest.herokuapp.com/avrahm/" + deleteId)
+      .then(res => {
+        console.log("deleted");
+        // this.setState({
+        //   listOfEvents: res})
       })
-      .catch(err=>{
-        console.log(err)
-      })
-    
+      .catch(err => {
+        console.log(err);
+      });
+
     // console.log(e.target.name)
-  }
+  };
 
   showEvents = () => {
     // console.log(this.props.listOfEvents.event.name)
@@ -32,13 +39,17 @@ constructor(){
 
       return (
         <div className="container d-flex flex-row" key={i}>
-          {/* <div className="col-4">
-            <img src={eachEvent.fac} alt={eachEvent.name} height="100px" />
-          </div> */}
+          <div className="col-4">
+            <img src={images[eachEvent.event.img]} alt={eachEvent.event.name} height="100px" />
+          </div>
           <div className="col-8">
             <Link to={"/singleevent/" + eachEvent._id}>
-              <h4 className="name">{eachEvent.event.name}</h4></Link><button name={eachEvent._id} onClick={this.deleteEvent}>delete</button>
-            
+              <h4 className="title">{eachEvent.event.title}</h4>
+            </Link>
+            <button name={eachEvent._id} onClick={this.deleteEvent}>
+              delete
+            </button>
+
             {/* Date: {eachEvent[i].date} */}
             {/* <p className="contributor">Phone: {eachEvent.PHONE}</p> */}
           </div>
@@ -47,24 +58,19 @@ constructor(){
     });
   };
 
-
-
   render() {
     // console.log(this.props.listOfEvents)
     // console.log(this.props.listOfEvents)
-    if(this.props.ready)
-    return (
+    if (this.props.ready)
+      return (
+        <div>
+          {/* <Header /> */}
 
-      <div>
-        {/* <Header /> */}
+          <h1>List of Events</h1>
 
-        <h1>List of Events</h1>
-
-        {this.showEvents()}
-
-      </div>
-    )
-    else
-    return(<div>Loading...</div>)
+          {this.showEvents()}
+        </div>
+      );
+    else return <div>Loading...</div>;
   }
 }

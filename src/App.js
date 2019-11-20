@@ -9,6 +9,8 @@ import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import axios from "axios";
 import SingleEvent from "./components/SingleEvent/SingleEvent";
+import { myHistory } from './index.js';
+
 
 class App extends Component {
   state = {
@@ -39,7 +41,7 @@ class App extends Component {
       .get("https://ironrest.herokuapp.com/avrahm")
       .then(res => {
         let x = res.data;
-        console.log(x)
+        // console.log(x)
         this.setState({
           theEventsFromIronrest: x,
           ready: true
@@ -50,16 +52,17 @@ class App extends Component {
       });
   }
   
-  submitNewEvent = (e, name,address,description,sport,date,time,user) => {
+  submitNewEvent = (e, title,location,description,sport,date,time,user) => {
     e.preventDefault();
 
     // let theEventsCopy = {...this.state.theEventsFromIronrest}
-    
+    let imgGen = sport+Math.floor(Math.random()*2)+'.jpg'
     const newEvent = { 
-        name: name,
-        address: address,
+        title: title,
+        location: location,
         description: description,
         sport: sport,
+        img: imgGen,
         date: date,
         time: time,
         user: user
@@ -68,7 +71,7 @@ class App extends Component {
       axios.post("https://ironrest.herokuapp.com/avrahm", {event: newEvent})
       .then(res => {
         let eventCopy = [...this.state.theEventsFromIronrest];
-        console.log(res)
+        // console.log(res)
         eventCopy.push(res.data.ops[0])
         // console.log(event)
       // console.log(res)
@@ -81,8 +84,8 @@ class App extends Component {
         this.setState({
           message: ''
         })
-        this.props.history.push('/singleevent/'+res.data.ops[0]._id)
-      }, 10000)
+        myHistory.push('/singleevent/'+res.data.ops[0]._id)
+      }, 2000)
       )
     })
     .catch(err => {
@@ -94,7 +97,7 @@ class App extends Component {
   };
 
   render() {
-    {console.log(this.props)}
+    // {console.log(myHistory)}
     if (this.state.ready) {
       return (
         <div className="App">

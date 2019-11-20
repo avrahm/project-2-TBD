@@ -3,25 +3,37 @@ import React from "react";
 // import Header from "../Header/Header";
 // import Axios from "axios";
 
-class SingleEvent extends React.Component {
-  
-  
+function importAll(r) {
+  let images = {};
+   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  return images;
+}
 
-  render(){
+const images = importAll(require.context('../../images', false, /\.(png|jpe?g|svg)$/));
+
+
+
+class SingleEvent extends React.Component {
+  render() {
     // console.log(this.state.theEvent)
 
-
     if (this.props.listOfEvents) {
-
-
-      let theEvent = this.props.listOfEvents.find(event => {
+      let theEventDetails = this.props.listOfEvents.find(event => {
         return event._id === this.props.match.params.id;
       });
+      let theEvent = theEventDetails.event;
       return (
         <div className="App">
-        {/* <Header /> */}
-          SingleEvent
-          {theEvent._id}
+          {/* <Header /> */}
+          <img src={images[theEvent.img]} alt={theEvent.title} height="200px" />
+          <h1>Title: {theEvent.title}</h1>
+          <h2>Address: {theEvent.address}</h2>
+          <h2>Description: {theEvent.description}</h2>
+          <h2>Sport: {theEvent.sport}</h2>
+          <h2>Date: {theEvent.date}</h2>
+          <h2>Time: {theEvent.time}</h2>
+          <h2>Img: {theEvent.img}</h2>
+          <h2>User: {theEvent.user}</h2>
         </div>
       );
     } else {
