@@ -11,7 +11,7 @@ import axios from "axios";
 import SingleEvent from "./components/SingleEvent/SingleEvent";
 import { myHistory } from './index.js';
 
-console.log('cool')
+console.log('cool!!!')
 
 class App extends Component {
   state = {
