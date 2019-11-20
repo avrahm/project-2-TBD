@@ -26,7 +26,7 @@ constructor(){
   }
 
   showEvents = () => {
-    console.log(this.props.listOfEvents)
+    // console.log(this.props.listOfEvents.event.name)
     return this.props.listOfEvents.map((eachEvent, i) => {
       // console.log(eachEvent)
 

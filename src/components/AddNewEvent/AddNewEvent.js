@@ -72,7 +72,6 @@ export default class AddNewEvent extends Component {
               this.state.time,
               this.state.user
             );
-            console.log(this.props)
           }}>
           <label htmlFor="name">Name</label>
           <input
