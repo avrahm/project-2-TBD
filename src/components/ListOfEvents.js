@@ -2,20 +2,21 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
 import Axios from "axios";
+import { myHistory } from "../index";
 //import images
 function importAll(r) {
   let images = {};
-   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+   r.keys().map((item, index) => { return images[item.replace('./', '')] = r(item); });
   return images;
 }
 
-const images = importAll(require.context('../../images', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
 
 export default class ListOfEvents extends Component {
   constructor() {
     super();
     this.state = {
-      // listOfEvents: {...this.props.listOfEvents}
+      listOfEvents: ''
     };
   }
   deleteEvent = e => {
@@ -23,8 +24,8 @@ export default class ListOfEvents extends Component {
     Axios.delete("https://ironrest.herokuapp.com/avrahm/" + deleteId)
       .then(res => {
         console.log("deleted");
-        // this.setState({
-        //   listOfEvents: res})
+        
+        myHistory.push("/listevent/");
       })
       .catch(err => {
         console.log(err);
@@ -39,15 +40,19 @@ export default class ListOfEvents extends Component {
       // console.log(eachEvent)
 
       return (
-        <div className="container d-flex flex-row" key={i}>
+        <div className="container d-flex flex-row" key={i}>            <Link to={"/singleevent/" + eachEvent._id}>
+
           <div className="col-4">
             <img src={images[eachEvent.event.img]} alt={eachEvent.event.name} height="100px" />
-          </div>
+          </div>            
+          </Link>
+
           <div className="col-8">
             <Link to={"/singleevent/" + eachEvent._id}>
               <h4 className="title">{eachEvent.event.title}</h4>
+              <h4 className="location-name">{eachEvent.event.location.name}</h4>
             </Link>
-            <button name={eachEvent._id} onClick={this.deleteEvent}>
+            <button name={eachEvent._id} id={i} onClick={this.deleteEvent}>
               delete
             </button>
 
@@ -62,7 +67,7 @@ export default class ListOfEvents extends Component {
   render() {
     // console.log(this.props.listOfEvents)
     // console.log(this.props.listOfEvents)
-    if (this.props.ready)
+    if (this.props.listOfEvents)
       return (
         <div>
           {/* <Header /> */}

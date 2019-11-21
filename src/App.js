@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import "./App.css";
-import ListOfPark from "./components/ListOfParks/ListOfParks";
-import ListOfEvents from "./components/ListOfEvents/ListOfEvents";
-import SinplePark from "./components/SinglePark/SinglePark";
+import ListOfPark from "./components/ListOfParks";
+import ListOfEvents from "./components/ListOfEvents";
+import SinplePark from "./components/SinglePark";
 // import Random from "./components/RandomPark/RandomPark";
-import AddNewEvent from "./components/AddNewEvent/AddNewEvent";
+import AddNewEvent from "./components/AddNewEvent";
 import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import axios from "axios";
-import SingleEvent from "./components/SingleEvent/SingleEvent";
+import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
 import Map from "./components/Map.js";
 import UserLocaiton from "./components/UserLocation";
+import Loading from "./components/Loading/loading";
+
+// testing files
+import FilterTesting from "./components/testing/filtertesting";
 
 class App extends Component {
   state = {
@@ -20,8 +24,10 @@ class App extends Component {
     ready: false,
     message: "",
     sports: ["soccer", "basketball", "yoga"],
-    filteredParks: '',
-    queryFilters: []
+    filteredParks: "",
+    basketball: true,
+    soccer: false,
+    yoga: false
   };
 
   componentDidMount() {
@@ -101,7 +107,7 @@ class App extends Component {
                 message: ""
               });
               myHistory.push("/singleevent/" + res.data.ops[0]._id);
-            }, 2000)
+            }, 1000)
         );
       })
       .catch(err => {
@@ -112,25 +118,40 @@ class App extends Component {
       });
   };
 
-  
-  filterParksBySport = (e) => {
-    // console.log(e.target.checked)
+  filterParksBySport = e => {
+    // console.log(e.target.name + ' : '  + e.target.checked)
+
+    // let queryFiltersCopy = { ...this.state.queryFilters };
+    // console.log(queryFiltersCopy);
     let check = e.target.checked;
     let sport = e.target.name;
-    let query = [...this.state.queryFilters];
-    query.push(sport,check)
-    this.setState({queryFilters: query})
-    console.log(this.state.queryFilters)
+    this.setState(
+      {
+        [sport]: check
+      },
+      () => {
+        console.log(this.state.basketball);
+        console.log(this.state.soccer);
+        console.log(this.state.yoga);
+      }
+    );
+
+    // let check = e.target.checked;
+    // let sport = e.target.name;
+    // let query = [...this.state.queryFilters];
+    // query.unshift(sport+':'+check)
+    // this.setState({queryFilters: query})
+    // console.log(this.state.queryFilters)
     // // let dataCopy = [...this.state.data]
     // let filterParks = this.state.theParksFromMiamiDade.filter(filters => {
     //   return filters.stocked === e.target.checked ? outStock.stocked === false : outStock
     // })
-    
+
     // // return console.log(outStockProduct)
     //  this.setState({
     //   filteredParks:outStockProduct
     //   })
-  }
+  };
 
   render() {
     // {console.log(myHistory)}
@@ -139,6 +160,22 @@ class App extends Component {
         <div className="App">
           <Header />
           <Switch>
+            {/* testing */}
+            <Route
+              exact
+              path="/testing/"
+              render={props => (
+                <FilterTesting
+                  {...props}
+                  listOfParks={this.state.theParksFromMiamiDade}
+                  listOfEvents={this.state.theEventsFromIronrest}
+                  ready={this.state.ready}
+                  filterParksFunction={this.filterParksBySport}
+                />
+              )}
+            />
+
+            {/* end testing */}
             <Route exact path="/userlocation/" component={UserLocaiton} />
             <Route
               exact
@@ -158,6 +195,7 @@ class App extends Component {
                 <SinplePark
                   {...props}
                   listOfParks={this.state.theParksFromMiamiDade}
+                  listOfEvents={this.state.theEventsFromIronrest}
                   ready={this.state.ready}
                 />
               )}
@@ -203,7 +241,7 @@ class App extends Component {
               render={props => (
                 <AddNewEvent
                   {...props}
-                  // listOfEvents={this.state.theEventsFromIronrest}
+                  listOfParks={this.state.theParksFromMiamiDade}
                   message={this.state.message}
                   submitEventFunction={this.submitNewEvent}
                   sports={this.state.sports}
@@ -214,7 +252,7 @@ class App extends Component {
         </div>
       );
     } else {
-      return <h1>Loading....</h1>;
+      return <Loading />;
     }
   }
 }

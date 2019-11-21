@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
+import Loading from "./Loading/loading"
 
 export default class List extends Component {
   showParks = () => {
@@ -32,6 +33,6 @@ export default class List extends Component {
           {this.showParks()}
         </div>
       );
-    else return <div>loading...</div>;
+    else return <Loading />;
   }
 }

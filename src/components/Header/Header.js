@@ -11,10 +11,13 @@ export default class Header extends Component {
       {/* <Link to="/singleevent/" className="btn btn-lg btn-outline-danger">
       <h3>Random Event</h3>
       </Link><br /> */}
-        <Link to="/userlocation/" className="btn btn-lg btn-outline-danger">
+        <Link to="/testing/" className="btn btn-lg btn-outline-danger">
+        <h3>Filter Testing </h3>
+        </Link><br />
+        <Link to="/userlocation/" className="btn btn-lg btn-outline-success">
         <h3>User Location</h3>
         </Link><br />
-        <Link to="/map/" className="btn btn-lg btn-outline-danger">
+        <Link to="/map/" className="btn btn-lg btn-outline-warning">
         <h3>Locations on the Map</h3>
         </Link><br />
         <Link to="/listevent/" className="btn btn-lg btn-outline-success">

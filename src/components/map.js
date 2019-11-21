@@ -3,8 +3,9 @@ import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 // import { geolocated } from "react-geolocated";
 // import MarkerCluster from '@google/markerclusterer'
-import { geolocated } from "react-geolocated";
+// import { geolocated } from "react-geolocated";
 import Header from "./Header/Header";
+import Loading from "../components/Loading/loading"
 
 export default class Map extends Component {
   state = {
@@ -60,6 +61,6 @@ export default class Map extends Component {
           <Header />
         </div>
       )
-    else return <div>loading...</div>;
+    else return <Loading />;
   }
 }
