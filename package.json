@@ -1,7 +1,7 @@
 {
-  "name": "ironbeers",
+  "name": "project-2-react-sportsvybe",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://avrahm.github.io/project-2-TBD",
   "dependencies": {
     "@google/markerclusterer": "^2.0.3",
