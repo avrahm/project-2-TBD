@@ -13,6 +13,8 @@ import { myHistory } from "./index.js";
 import Map from "./components/Map.js";
 import UserLocaiton from "./components/UserLocation";
 import Loading from "./components/Loading/loading";
+import SignIn from "./components/SignIn";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // testing files
 import FilterTesting from "./components/testing/filtertesting";
@@ -24,7 +26,8 @@ class App extends Component {
     ready: false,
     message: "",
     sports: ["soccer", "basketball", "yoga"],
-    filteredParks: "",
+    filteredEvents: [],
+    filteredParks: [],
     basketball: true,
     soccer: false,
     yoga: false
@@ -55,6 +58,7 @@ class App extends Component {
         // console.log(x)
         this.setState({
           theEventsFromIronrest: x,
+          filteredEvents: x,
           ready: true
         });
       })
@@ -118,39 +122,35 @@ class App extends Component {
       });
   };
 
-  filterParksBySport = e => {
-    // console.log(e.target.name + ' : '  + e.target.checked)
+  filterEventsFunction = e => {
+    // console.log(e.target.name)
+    let eventsFiltered;
+    //if target checked is true then filter events by sport with the target name (ie. basketball, soccer, etc)
+    if (e.target.checked === true) {
+      eventsFiltered = this.state.theEventsFromIronrest.filter(
+        res => res.event.sport === e.target.name
+      );
+      this.setState({ filteredEvents: eventsFiltered });
+      // console.log(eventsFilter)
+    } else {
+      this.setState({ filteredEvents: this.state.theEventsFromIronrest });
+    }
+  };
 
-    // let queryFiltersCopy = { ...this.state.queryFilters };
-    // console.log(queryFiltersCopy);
-    let check = e.target.checked;
-    let sport = e.target.name;
-    this.setState(
-      {
-        [sport]: check
-      },
-      () => {
-        console.log(this.state.basketball);
-        console.log(this.state.soccer);
-        console.log(this.state.yoga);
-      }
-    );
-
-    // let check = e.target.checked;
-    // let sport = e.target.name;
-    // let query = [...this.state.queryFilters];
-    // query.unshift(sport+':'+check)
-    // this.setState({queryFilters: query})
-    // console.log(this.state.queryFilters)
-    // // let dataCopy = [...this.state.data]
-    // let filterParks = this.state.theParksFromMiamiDade.filter(filters => {
-    //   return filters.stocked === e.target.checked ? outStock.stocked === false : outStock
-    // })
-
-    // // return console.log(outStockProduct)
-    //  this.setState({
-    //   filteredParks:outStockProduct
-    //   })
+  parkFilterFunction = e => {
+    let parksFiltered;
+    let sportButton = e.target.name.toUpperCase();
+    // console.log(sportButton)
+    //if target checked is true then filter parks by sport with the target name (ie. basketball, soccer, etc)
+    if (e.target.checked === true) {
+      parksFiltered = this.state.theParksFromMiamiDade.filter(
+        res => res.attributes[sportButton] === "Yes"
+      );
+      this.setState({ filteredParks: parksFiltered });
+      // console.log(this.state.parks)
+    } else {
+      this.setState({ filteredParks: this.state.theParksFromMiamiDade });
+    }
   };
 
   render() {
@@ -158,6 +158,7 @@ class App extends Component {
     if (this.state.ready) {
       return (
         <div className="App">
+          <SignIn />
           <Header />
           <Switch>
             {/* testing */}
@@ -168,9 +169,9 @@ class App extends Component {
                 <FilterTesting
                   {...props}
                   listOfParks={this.state.theParksFromMiamiDade}
-                  listOfEvents={this.state.theEventsFromIronrest}
+                  listOfEvents={this.state.filteredEvents}
                   ready={this.state.ready}
-                  filterParksFunction={this.filterParksBySport}
+                  filterEventsFunction={this.filterEventsFunction}
                 />
               )}
             />
@@ -183,8 +184,9 @@ class App extends Component {
               render={props => (
                 <ListOfPark
                   {...props}
-                  listOfParks={this.state.theParksFromMiamiDade}
+                  listOfParks={this.state.filteredParks}
                   ready={this.state.ready}
+                  parkFilterFunction={this.parkFilterFunction}
                 />
               )}
             />
@@ -206,8 +208,9 @@ class App extends Component {
               render={props => (
                 <ListOfEvents
                   {...props}
-                  listOfEvents={this.state.theEventsFromIronrest}
+                  listOfEvents={this.state.filteredEvents}
                   ready={this.state.ready}
+                  filterEventsFunction={this.filterEventsFunction}
                 />
               )}
             />
@@ -218,8 +221,8 @@ class App extends Component {
               render={props => (
                 <Map
                   {...props}
-                  listOfParks={this.state.theParksFromMiamiDade}
-                  filterParksFunction={this.filterParksBySport}
+                  listOfParks={this.state.filteredParks}
+                  parkFilterFunction={this.parkFilterFunction}
                 />
               )}
             />

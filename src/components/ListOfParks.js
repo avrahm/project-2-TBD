@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
-import Loading from "./Loading/loading"
+import Loading from "./Loading/loading";
 
 export default class List extends Component {
   showParks = () => {
@@ -30,6 +30,41 @@ export default class List extends Component {
         <div>
           {/* <Header /> */}
           <h1>List of Parks</h1>
+
+          <div className="menu">
+            <h1>Filter</h1>
+            basketball:{" "}
+            <input
+              type="checkbox"
+              name="basketball"
+              onClick={this.props.parkFilterFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            soccer:{" "}
+            <input
+              type="checkbox"
+              name="soccer"
+              onClick={this.props.parkFilterFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            baseball:{" "}
+            <input
+              type="checkbox"
+              name="baseball"
+              onClick={this.props.parkFilterFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            yoga:{" "}
+            <input
+              type="checkbox"
+              name="yoga"
+              onClick={this.props.parkFilterFunction}
+              // onClick={this.eventHandler}
+            />
+          </div>
           {this.showParks()}
         </div>
       );

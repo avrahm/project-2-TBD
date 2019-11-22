@@ -23,7 +23,34 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
+.login {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+}
+
+.login button {
+  padding: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+.menu {
+  position: fixed;
+  right: 50px;
+  bottom: 200px;
+}

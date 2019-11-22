@@ -1,10 +1,9 @@
 import React from "react";
 // import Header from "../Header/Header";
 import { Link } from "react-router-dom";
-import Loading from "./Loading/loading"
+import Loading from "./Loading/loading";
 
 class Single extends React.Component {
-  
   //find events for the list of event that match the current park
   eventsAtThisPark = () => {
     let copyOfParkList = this.props.listOfEvents.map((events, i) => {

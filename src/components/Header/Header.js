@@ -2,36 +2,33 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class Header extends Component {
-
   render() {
-   
-
     return (
-      <div className={"container"}>
-      {/* <Link to="/singleevent/" className="btn btn-lg btn-outline-danger">
-      <h3>Random Event</h3>
-      </Link><br /> */}
-        <Link to="/testing/" className="btn btn-lg btn-outline-danger">
-        <h3>Filter Testing </h3>
-        </Link><br />
+      <div className="navbar fixed-bottom navbar-light bg-light flex-row ">
+        {/* <Link to="/singleevent/" className="btn btn-lg btn-outline-danger">
+      <div>Random Event</div>
+      </Link> */}
+        {/* <Link to="/testing/" className="btn btn-lg btn-outline-danger">
+        <div>Filter Testing </div>
+        </Link> */}
         <Link to="/userlocation/" className="btn btn-lg btn-outline-success">
-        <h3>User Location</h3>
-        </Link><br />
+          <div>User Location</div>
+        </Link>
         <Link to="/map/" className="btn btn-lg btn-outline-warning">
-        <h3>Locations on the Map</h3>
-        </Link><br />
+          <div>Locations on the Map</div>
+        </Link>
         <Link to="/listevent/" className="btn btn-lg btn-outline-success">
-        <h3>List of Events</h3>
-        </Link><br />
+          <div>List of Events</div>
+        </Link>
         <Link to="/listpark/" className="btn btn-lg btn-outline-success">
-        <h3>List of Parks</h3>
-        </Link><br />
+          <div>List of Parks</div>
+        </Link>
         {/* <Link to="/randompark/" className="btn btn-lg btn-outline-success">
-        <h3>Random Park</h3>
-        </Link><br /> */}
+        <div>Random Park</div>
+        </Link> */}
         <Link to="/new/" className="btn btn-lg btn-outline-success">
-        <h3>Add a Event</h3>
-        </Link><br />
+          <div>Add a Event</div>
+        </Link>
       </div>
     );
   }

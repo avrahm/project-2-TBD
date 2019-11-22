@@ -6,25 +6,23 @@ import { myHistory } from "../index";
 //import images
 function importAll(r) {
   let images = {};
-   r.keys().map((item, index) => { return images[item.replace('./', '')] = r(item); });
+  r.keys().map((item, index) => {
+    return (images[item.replace("./", "")] = r(item));
+  });
   return images;
 }
 
-const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(
+  require.context("../images", false, /\.(png|jpe?g|svg)$/)
+);
 
 export default class ListOfEvents extends Component {
-  constructor() {
-    super();
-    this.state = {
-      listOfEvents: ''
-    };
-  }
   deleteEvent = e => {
     let deleteId = e.target.name;
     Axios.delete("https://ironrest.herokuapp.com/avrahm/" + deleteId)
       .then(res => {
         console.log("deleted");
-        
+
         myHistory.push("/listevent/");
       })
       .catch(err => {
@@ -33,20 +31,23 @@ export default class ListOfEvents extends Component {
 
     // console.log(e.target.name)
   };
-
   showEvents = () => {
     // console.log(this.props.listOfEvents.event.name)
     return this.props.listOfEvents.map((eachEvent, i) => {
       // console.log(eachEvent)
 
       return (
-        <div className="container d-flex flex-row" key={i}>            <Link to={"/singleevent/" + eachEvent._id}>
-
-          <div className="col-4">
-            <img src={images[eachEvent.event.img]} alt={eachEvent.event.name} height="100px" />
-          </div>            
+        <div className="container d-flex flex-row" key={i}>
+          {" "}
+          <Link to={"/singleevent/" + eachEvent._id}>
+            <div className="col-4">
+              <img
+                src={images[eachEvent.event.img]}
+                alt={eachEvent.event.name}
+                height="100px"
+              />
+            </div>
           </Link>
-
           <div className="col-8">
             <Link to={"/singleevent/" + eachEvent._id}>
               <h4 className="title">{eachEvent.event.title}</h4>
@@ -73,7 +74,32 @@ export default class ListOfEvents extends Component {
           {/* <Header /> */}
 
           <h1>List of Events</h1>
-
+          <div className="menu">
+            <h1>Filter</h1>
+            basketball:{" "}
+            <input
+              type="checkbox"
+              name="basketball"
+              onClick={this.props.filterEventsFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            soccer:{" "}
+            <input
+              type="checkbox"
+              name="soccer"
+              onClick={this.props.filterEventsFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            yoga:{" "}
+            <input
+              type="checkbox"
+              name="yoga"
+              onClick={this.props.filterEventsFunction}
+              // onClick={this.eventHandler}
+            />
+          </div>
           {this.showEvents()}
         </div>
       );
