@@ -23,7 +23,7 @@ export default class ListOfEvents extends Component {
       .then(res => {
         console.log("deleted");
 
-        myHistory.push("/listevent/");
+        window.location.reload()
       })
       .catch(err => {
         console.log(err);

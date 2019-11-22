@@ -11,11 +11,11 @@ export default class Header extends Component {
         {/* <Link to="/testing/" className="btn btn-lg btn-outline-danger">
         <div>Filter Testing </div>
         </Link> */}
-        <Link to="/userlocation/" className="btn btn-lg btn-outline-success">
+        {/* <Link to="/userlocation/" className="btn btn-lg btn-outline-success">
           <div>User Location</div>
-        </Link>
+        </Link> */}
         <Link to="/map/" className="btn btn-lg btn-outline-warning">
-          <div>Locations on the Map</div>
+          <div>Map</div>
         </Link>
         <Link to="/listevent/" className="btn btn-lg btn-outline-success">
           <div>List of Events</div>

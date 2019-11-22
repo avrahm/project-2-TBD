@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import ListOfPark from "./components/ListOfParks";
+import ListOfParks from "./components/ListOfParks";
 import ListOfEvents from "./components/ListOfEvents";
 import SinplePark from "./components/SinglePark";
 // import Random from "./components/RandomPark/RandomPark";
@@ -11,7 +11,7 @@ import axios from "axios";
 import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
 import Map from "./components/Map.js";
-import UserLocaiton from "./components/UserLocation";
+// import UserLocaiton from "./components/UserLocation";
 import Loading from "./components/Loading/loading";
 import SignIn from "./components/SignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -177,19 +177,7 @@ class App extends Component {
             />
 
             {/* end testing */}
-            <Route exact path="/userlocation/" component={UserLocaiton} />
-            <Route
-              exact
-              path="/listpark/"
-              render={props => (
-                <ListOfPark
-                  {...props}
-                  listOfParks={this.state.filteredParks}
-                  ready={this.state.ready}
-                  parkFilterFunction={this.parkFilterFunction}
-                />
-              )}
-            />
+           
             <Route
               exact
               path="/singlepark/:id"
@@ -199,6 +187,18 @@ class App extends Component {
                   listOfParks={this.state.theParksFromMiamiDade}
                   listOfEvents={this.state.theEventsFromIronrest}
                   ready={this.state.ready}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/listpark/"
+              render={props => (
+                <ListOfParks
+                  {...props}
+                  listOfParks={this.state.filteredParks}
+                  ready={this.state.ready}
+                  parkFilterFunction={this.parkFilterFunction}
                 />
               )}
             />
@@ -217,7 +217,6 @@ class App extends Component {
             <Route
               exact
               path="/map/"
-              // component={Map}
               render={props => (
                 <Map
                   {...props}
