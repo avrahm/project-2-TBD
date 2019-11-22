@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7b916a72dac43e0d647626cfadfc32ce",
+    "revision": "a52556f22e5439879b81ff7ef4efe3a9",
     "url": "/project-2-TBD/index.html"
   },
   {
@@ -8,15 +8,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/project-2-TBD/static/css/2.8b70035b.chunk.css"
   },
   {
-    "revision": "c53bbdb6babc136f0129",
-    "url": "/project-2-TBD/static/css/main.1028f6b5.chunk.css"
+    "revision": "72c72cc51d0e420d5b91",
+    "url": "/project-2-TBD/static/css/main.aebaf515.chunk.css"
   },
   {
     "revision": "8f3731a20311474d5173",
     "url": "/project-2-TBD/static/js/2.46d4ab1f.chunk.js"
   },
   {
-    "revision": "c53bbdb6babc136f0129",
+    "revision": "72c72cc51d0e420d5b91",
     "url": "/project-2-TBD/static/js/main.9814aa13.chunk.js"
   },
   {
