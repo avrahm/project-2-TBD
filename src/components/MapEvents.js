@@ -3,7 +3,7 @@ import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import UserMarker from "./UserMarker";
 // import MarkerCluster from '@google/markerclusterer'
-import Loading from "../components/Loading/loading";
+import Loading from "./Loading/loading";
 
 export default class Map extends Component {
   state = {
@@ -52,8 +52,8 @@ export default class Map extends Component {
       return (
         <Marker
           key={i}
-          lat={eachPark.attributes.LAT}
-          lng={eachPark.attributes.LON}
+          lat={eachPark.event.location.lat}
+          lng={eachPark.event.location.lon}
           text="My Marker"
         />
       );

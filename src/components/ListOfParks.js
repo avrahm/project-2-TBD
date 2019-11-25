@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
 import Loading from "./Loading/loading";
 
-export default class List extends Component {
+export default class ListOfParks extends Component {
   showParks = () => {
     return this.props.listOfParks.map((eachPark, i) => {
-      // console.log(eachPark.attributes.ID)
       return (
         <div className="container d-flex flex-row" key={i}>
           {/* <div className="col-4">

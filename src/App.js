@@ -11,6 +11,8 @@ import axios from "axios";
 import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
 import Map from "./components/Map.js";
+import MapTest from "./components/MapTest.js";
+import MapEvents from "./components/MapEvents.js";
 // import UserLocaiton from "./components/UserLocation";
 import Loading from "./components/Loading/loading";
 import SignIn from "./components/SignIn";
@@ -43,6 +45,7 @@ class App extends Component {
         let x = theResults.data.features;
         this.setState({
           theParksFromMiamiDade: x,
+          filteredParks: x,
           ready: true
         });
       })
@@ -216,12 +219,34 @@ class App extends Component {
             />
             <Route
               exact
+              path="/maptest/"
+              render={props => (
+                <MapTest
+                  {...props}
+                  listOfParks={this.state.filteredEvents}
+                  parkFilterFunction={this.filterEventsFunction}
+                />
+              )}
+            />
+            <Route
+              exact
               path="/map/"
               render={props => (
                 <Map
                   {...props}
                   listOfParks={this.state.filteredParks}
                   parkFilterFunction={this.parkFilterFunction}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/mapevents/"
+              render={props => (
+                <MapEvents
+                  {...props}
+                  listOfParks={this.state.filteredEvents}
+                  parkFilterFunction={this.filterEventsFunction}
                 />
               )}
             />

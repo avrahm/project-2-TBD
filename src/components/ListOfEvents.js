@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
 import Axios from "axios";
-import { myHistory } from "../index";
+// import { myHistory } from "../index";
 //import images
 function importAll(r) {
   let images = {};
@@ -37,7 +37,7 @@ export default class ListOfEvents extends Component {
       // console.log(eachEvent)
 
       return (
-        <div className="container d-flex flex-row" key={i}>
+        <div className="container d-flex flex-row event-card" key={i}>
           {" "}
           <Link to={"/singleevent/" + eachEvent._id}>
             <div className="col-4">
@@ -76,7 +76,7 @@ export default class ListOfEvents extends Component {
           <h1>List of Events</h1>
           <div className="menu">
             <h1>Filter</h1>
-            basketball:{" "}
+            Basketball:{" "}
             <input
               type="checkbox"
               name="basketball"
@@ -84,7 +84,15 @@ export default class ListOfEvents extends Component {
               // onClick={this.eventHandler}
             />
             <br />
-            soccer:{" "}
+            Baseball:{" "}
+            <input
+              type="checkbox"
+              name="baseball"
+              onClick={this.props.filterEventsFunction}
+              // onClick={this.eventHandler}
+            />
+            <br />
+            Soccer:{" "}
             <input
               type="checkbox"
               name="soccer"
@@ -92,10 +100,10 @@ export default class ListOfEvents extends Component {
               // onClick={this.eventHandler}
             />
             <br />
-            yoga:{" "}
+            Volleyball:{" "}
             <input
               type="checkbox"
-              name="yoga"
+              name="volleyball"
               onClick={this.props.filterEventsFunction}
               // onClick={this.eventHandler}
             />

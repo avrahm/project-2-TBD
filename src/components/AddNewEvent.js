@@ -7,7 +7,7 @@ export default class AddNewEvent extends Component {
   constructor() {
     super();
     this.state = {
-      sports: ["soccer", "basketball", "yoga"],
+      sports: ["soccer", "basketball", "volleyball","baseball"],
       title: "Event " + Math.floor(Math.random() * 1000),
       location: {
         address: "",
