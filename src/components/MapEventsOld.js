@@ -4,6 +4,8 @@ import InfoWindowEx from "./InfoWindowEx";
 import { myHistory } from "../index.js";
 // import UserMarker from "./UserMarker";
 import FilterMenu from "./FilterMenu"
+import parkImg from "../images/park-map.png"
+import eventImg from "../images/league-map.png"
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -16,36 +18,37 @@ export class MapContainer extends Component {
         latitude: 0,
         longitude: 0
       },
+      showDetailsLink: '',
     };
   }
 
   onMarkerClick = (props, marker, e) => {
     console.log(props.id)
-    if(this.props.id==="park"){
+    if(props.id==="park"){
       this.setState({
         selectedPlace: props.place_,
         selectedPlaceName: props.place_.attributes.NAME,
+        selectedPlaceId: props.place_.attributes.ID,
+        selectedPlaceLink: "/singlepark/",
         activeMarker: marker,
         showingInfoWindow: true
       });
     }
-    else if(this.props.id==="event"){
+    else if(props.id==="event"){
     this.setState({
       selectedPlace: props.place_,
-      selectedPlaceName: props.place_.attributes.NAME,
+      selectedPlaceName: props.place_.event.title,
+      selectedPlaceId: props.place_._id,
+      selectedPlaceLink: "/singleevent/",
       activeMarker: marker,
       showingInfoWindow: true
     });
   };
 }
 
-  showDetails = (place,e) => {
-    // console.log('3'+this.state.selectedPlace.event.title);
-    if(this.props.id==="park"){
-    myHistory.push("/singlepark/" + place.attributes.ID);
-    } else if(this.props.id==="event"){
-      myHistory.push("/singleevent/" + place._id);
-    }
+  showDetails = () => {
+    myHistory.push(this.state.selectedPlaceLink+this.state.selectedPlaceId)
+   
   };
 
   getLocation = () => {
@@ -93,6 +96,7 @@ export class MapContainer extends Component {
                 key={i}
                 id={"park"}
                 place_={place}
+                icon={{ url: parkImg }}
                 position={{
                   lat: place.attributes.LAT,
                   lng: place.attributes.LON
@@ -108,6 +112,7 @@ export class MapContainer extends Component {
                 key={place._id}
                 id={"event"}
                 place_={place}
+                icon={{ url: eventImg }}
                 position={{ lat: place.event.location.lat, lng: place.event.location.lon }}
               />
             );

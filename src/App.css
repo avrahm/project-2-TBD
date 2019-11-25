@@ -76,13 +76,13 @@
   display: none;
 }
 
-.menu {
+.filter-menu {
   border: 1px black solid;
   background-color: white;
   position: fixed;
   z-index: 2;
   padding: 20px;
-  right: 50px;
+  left: 50px;
   bottom: 100px;
 }
 
@@ -92,8 +92,16 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.event-card{
+
+.event-card {
   border: 1px solid black;
   margin: 20px;
   width: 70%;
+}
+
+.nav-menu {
+  position: fixed;
+  right: 50px;
+  bottom: 100px;
+  z-index: 2;
 }
