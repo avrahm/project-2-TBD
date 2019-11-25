@@ -36,7 +36,7 @@ export class MapContainer extends Component {
         <Map
           google={this.props.google}
           className={"map"}
-          zoom={14}
+          zoom={12}
           initialCenter={this.props.center}
         >
           {this.props.eventData.map((place, i) => {

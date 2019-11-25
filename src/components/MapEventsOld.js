@@ -1,22 +1,50 @@
 import React, { Component } from "react";
-import GoogleMapReact from "google-map-react";
-import Marker from "./Marker";
-import UserMarker from "./UserMarker";
-// import MarkerCluster from '@google/markerclusterer'
-import Loading from "./Loading/loading";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import InfoWindowEx from "./InfoWindowEx";
+import { myHistory } from "../index.js";
+// import UserMarker from "./UserMarker";
+import FilterMenu from "./FilterMenu"
 
-export default class Map extends Component {
-  state = {
-    center: {
-      lat: 25.7617,
-      lng: -80.1918
-    },
-    zoom: 10,
-    message: "",
-    status: "",
-    userLocation: {
-      latitude: 0,
-      longitude: 0
+export class MapContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      userLocation: {
+        latitude: 0,
+        longitude: 0
+      },
+    };
+  }
+
+  onMarkerClick = (props, marker, e) => {
+    console.log(props.id)
+    if(this.props.id==="park"){
+      this.setState({
+        selectedPlace: props.place_,
+        selectedPlaceName: props.place_.attributes.NAME,
+        activeMarker: marker,
+        showingInfoWindow: true
+      });
+    }
+    else if(this.props.id==="event"){
+    this.setState({
+      selectedPlace: props.place_,
+      selectedPlaceName: props.place_.attributes.NAME,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  };
+}
+
+  showDetails = (place,e) => {
+    // console.log('3'+this.state.selectedPlace.event.title);
+    if(this.props.id==="park"){
+    myHistory.push("/singlepark/" + place.attributes.ID);
+    } else if(this.props.id==="event"){
+      myHistory.push("/singleevent/" + place._id);
     }
   };
 
@@ -27,11 +55,12 @@ export default class Map extends Component {
         userLocation: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
-        },
-        center: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        },
+
+        }
+        // center: {
+        //   lat: position.coords.latitude,
+        //   lng: position.coords.longitude
+        // },
       });
     };
 
@@ -47,77 +76,71 @@ export default class Map extends Component {
 
     navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
   };
-  showParks = () => {
-    return this.props.listOfParks.map((eachPark, i) => {
-      return (
-        <Marker
-          key={i}
-          lat={eachPark.event.location.lat}
-          lng={eachPark.event.location.lon}
-          text="My Marker"
-        />
-      );
-    });
-  };
 
   render() {
-    if (this.props.listOfParks)
-      return (
-        <div>
-          <h1>{this.state.message}</h1>
-          <GoogleMapReact
-            style={{ height: "80vh", width: "100%" }}
-            bootstrapURLKeys={{
-              key: "AIzaSyDZiBSkaZztK2mN3Q8QzvzcfPCsDX2_p58"
-            }}
-            defaultCenter={this.state.center}
-            defaultZoom={this.state.zoom}
+    return (
+      <div className="map-container">
+        <Map
+          google={this.props.google}
+          className={"map"}
+          zoom={12}
+          initialCenter={this.props.center}
+        >
+          {this.props.parkData.map((place, i) => {
+            return (
+              <Marker
+                onClick={this.onMarkerClick}
+                key={i}
+                id={"park"}
+                place_={place}
+                position={{
+                  lat: place.attributes.LAT,
+                  lng: place.attributes.LON
+                }}
+                // icon={"../images/park-map.png"}
+              />
+            );
+          })}
+          {this.props.eventData.map((place, i) => {
+            return (
+              <Marker
+                onClick={this.onMarkerClick}
+                key={place._id}
+                id={"event"}
+                place_={place}
+                position={{ lat: place.event.location.lat, lng: place.event.location.lon }}
+              />
+            );
+          })}
+          {/* <Marker
+                key={"User"}
+                name={"User Location"}
+                position={{
+                  lat: this.state.userLocation.latitude,
+                  lng: this.state.userLocation.longitude
+                }}
+              /> */}
+          <InfoWindowEx
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
           >
-            {this.showParks()}
-            <UserMarker
-              lat={this.state.userLocation.latitude}
-              lng={this.state.userLocation.longitude}
-            />
-          </GoogleMapReact>
-          
-          <div className="menu">
-            <h1>Filter</h1>
-            <button
-              onClick={this.getLocation}
-            >
-              Get Location
-            </button>
-            <br />
-            Basketball:
-            <input
-              type="checkbox"
-              name="basketball"
-              onClick={this.props.parkFilterFunction}
-            />
-            <br />
-            Soccer:{" "}
-            <input
-              type="checkbox"
-              name="soccer"
-              onClick={this.props.parkFilterFunction}
-            />
-            <br />
-            Baseball{" "}
-            <input
-              type="checkbox"
-              name="baseball"
-              onClick={this.props.parkFilterFunction}
-            />
-            <br />
-            Volleyball:
-            <input
-              type="checkbox"
-              name="volleyball"
-              onClick={this.props.parkFilterFunction}
-            />
-          </div>
-        </div>
-      );
-    else return <Loading />;
+            <div>
+              <h3>{this.state.selectedPlaceName}</h3>
+              <button
+                type="button"
+                onClick={this.showDetails.bind(this, this.state.selectedPlace)}
+              >
+                Show details
+              </button>
+            </div>
+          </InfoWindowEx>
+        </Map>
+        <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction}/>
+         </div>
+    );
   }
 }
+
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyDZiBSkaZztK2mN3Q8QzvzcfPCsDX2_p58"
+})(MapContainer);

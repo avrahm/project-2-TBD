@@ -12,13 +12,13 @@ import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
 import MapOfParks from "./components/MapOfParks.js";
 import MapOfEvents from "./components/MapOfEvents.js";
-// import UserLocaiton from "./components/UserLocation";
 import Loading from "./components/Loading/loading";
 import SignIn from "./components/SignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // testing files
-import FilterTesting from "./components/testing/filtertesting";
+// import FilterTesting from "./components/testing/filtertesting";
+import MapEventsOld from "./components/MapEventsOld";
 
 class App extends Component {
   state = {
@@ -197,14 +197,15 @@ class App extends Component {
             {/* testing */}
             <Route
               exact
-              path="/testing/"
+              path="/maptesting/"
               render={props => (
-                <FilterTesting
+                <MapEventsOld
                   {...props}
-                  listOfParks={this.state.theParksFromMiamiDade}
-                  listOfEvents={this.state.filteredEvents}
-                  ready={this.state.ready}
+                  parkData={this.state.filteredParks}
+                  eventData={this.state.filteredEvents}
                   filterFunction={this.filterFunction}
+                  center={{ lat: 25.7617, lng: -80.1918 }}
+                  selectedOption={this.state.selectedOption}
                 />
               )}
             />

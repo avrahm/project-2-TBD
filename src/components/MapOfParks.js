@@ -20,7 +20,7 @@ export class MapContainer extends Component {
   }
 
   onMarkerClick = (props, marker, e) => {
-    // console.log(props.place_)
+    console.log(props)
     this.setState({
       selectedPlace: props.place_,
       selectedPlaceName: props.place_.attributes.NAME,
@@ -77,6 +77,7 @@ export class MapContainer extends Component {
               <Marker
                 onClick={this.onMarkerClick}
                 key={i}
+                id={"park"}
                 place_={place}
                 name={place.attributes.NAME}
                 position={{
