@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
 import Axios from "axios";
-// import { myHistory } from "../index";
+import FilterMenu from "./FilterMenu"
+
 //import images
 function importAll(r) {
   let images = {};
@@ -66,48 +67,13 @@ export default class ListOfEvents extends Component {
   };
 
   render() {
-    // console.log(this.props.listOfEvents)
-    // console.log(this.props.listOfEvents)
     if (this.props.listOfEvents)
       return (
         <div>
           {/* <Header /> */}
 
           <h1>List of Events</h1>
-          <div className="menu">
-            <h1>Filter</h1>
-            Basketball:{" "}
-            <input
-              type="checkbox"
-              name="basketball"
-              onClick={this.props.filterEventsFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            Baseball:{" "}
-            <input
-              type="checkbox"
-              name="baseball"
-              onClick={this.props.filterEventsFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            Soccer:{" "}
-            <input
-              type="checkbox"
-              name="soccer"
-              onClick={this.props.filterEventsFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            Volleyball:{" "}
-            <input
-              type="checkbox"
-              name="volleyball"
-              onClick={this.props.filterEventsFunction}
-              // onClick={this.eventHandler}
-            />
-          </div>
+          <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction}/>
           {this.showEvents()}
         </div>
       );

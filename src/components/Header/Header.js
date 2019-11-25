@@ -14,13 +14,13 @@ export default class Header extends Component {
         {/* <Link to="/userlocation/" className="btn btn-lg btn-outline-success">
           <div>User Location</div>
         </Link> */}
-        <Link to="/maptest/" className="btn btn-lg btn-outline-danger">
+        {/* <Link to="/maptest/" className="btn btn-lg btn-outline-danger">
           <div>Map Test</div>
-        </Link>
-        <Link to="/map/" className="btn btn-lg btn-outline-warning">
+        </Link> */}
+        <Link to="/parksmap/" className="btn btn-lg btn-outline-warning">
           <div>Map(w/o info)</div>
         </Link>
-        <Link to="/mapevents/" className="btn btn-lg btn-outline-warning">
+        <Link to="/eventsmap/" className="btn btn-lg btn-outline-warning">
           <div>Events Map (w/o info)</div>
         </Link>
         <Link to="/listevent/" className="btn btn-lg btn-outline-success">

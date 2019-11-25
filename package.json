@@ -4,6 +4,7 @@
   "private": false,
   "homepage": "https://avrahm.github.io/project-2-TBD",
   "dependencies": {
+    "@google/maps": "^1.0.2",
     "@google/markerclusterer": "^2.0.3",
     "@react-google-maps/api": "^1.7.12",
     "axios": "^0.19.0",

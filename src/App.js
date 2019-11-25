@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import ListOfParks from "./components/ListOfParks";
 import ListOfEvents from "./components/ListOfEvents";
-import SinplePark from "./components/SinglePark";
+import SinglePark from "./components/SinglePark";
 // import Random from "./components/RandomPark/RandomPark";
 import AddNewEvent from "./components/AddNewEvent";
 import { Switch, Route } from "react-router-dom";
@@ -10,9 +10,8 @@ import Header from "./components/Header/Header";
 import axios from "axios";
 import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
-import Map from "./components/Map.js";
-import MapTest from "./components/MapTest.js";
-import MapEvents from "./components/MapEvents.js";
+import MapOfParks from "./components/MapOfParks.js";
+import MapOfEvents from "./components/MapOfEvents.js";
 // import UserLocaiton from "./components/UserLocation";
 import Loading from "./components/Loading/loading";
 import SignIn from "./components/SignIn";
@@ -32,7 +31,8 @@ class App extends Component {
     filteredParks: [],
     basketball: true,
     soccer: false,
-    yoga: false
+    yoga: false,
+    selectedOption: ""
   };
 
   componentDidMount() {
@@ -125,34 +125,64 @@ class App extends Component {
       });
   };
 
-  filterEventsFunction = e => {
-    // console.log(e.target.name)
-    let eventsFiltered;
-    //if target checked is true then filter events by sport with the target name (ie. basketball, soccer, etc)
-    if (e.target.checked === true) {
-      eventsFiltered = this.state.theEventsFromIronrest.filter(
-        res => res.event.sport === e.target.name
-      );
-      this.setState({ filteredEvents: eventsFiltered });
-      // console.log(eventsFilter)
-    } else {
-      this.setState({ filteredEvents: this.state.theEventsFromIronrest });
-    }
-  };
+  // filterFunction = e => {
+  //   // console.log(e.target.name)
+  //   let eventsFiltered;
+  //   let sportButton = e.target.name;
+  //   //if target checked is true then filter events by sport with the target name (ie. basketball, soccer, etc)
+  //   if (sportButton === "all") {
+  //     this.setState({
+  //       filteredEvents: this.state.theEventsFromIronrest,
+  //       selectedOption: e.target.name
+  //     });
+  //   } else if (e.target.checked === true) {
+  //     eventsFiltered = this.state.theEventsFromIronrest.filter(
+  //       res => res.event.sport === e.target.name
+  //     );
+  //     this.setState({
+  //       filteredEvents: eventsFiltered,
+  //       selectedOption: e.target.name
+  //     });
+  //     // console.log(eventsFilter)
+  //   } else {
+  //     this.setState({
+  //       filteredEvents: this.state.theEventsFromIronrest,
+  //       selectedOption: "all"
+  //     });
+  //   }
+  // };
 
-  parkFilterFunction = e => {
+  filterFunction = e => {
     let parksFiltered;
+    let eventsFiltered;
     let sportButton = e.target.name.toUpperCase();
     // console.log(sportButton)
     //if target checked is true then filter parks by sport with the target name (ie. basketball, soccer, etc)
-    if (e.target.checked === true) {
+    if (e.target.name === "all") {
+      this.setState({
+        filteredParks: this.state.theParksFromMiamiDade,
+        filteredEvents: this.state.theEventsFromIronrest,
+        selectedOption: e.target.name
+      });
+    } else if (e.target.checked === true) {
       parksFiltered = this.state.theParksFromMiamiDade.filter(
         res => res.attributes[sportButton] === "Yes"
       );
-      this.setState({ filteredParks: parksFiltered });
+      eventsFiltered = this.state.theEventsFromIronrest.filter(
+        res => res.event.sport === e.target.name
+      );
+      this.setState({
+        filteredParks: parksFiltered,
+        filteredEvents: eventsFiltered,
+        selectedOption: e.target.name
+      });
       // console.log(this.state.parks)
     } else {
-      this.setState({ filteredParks: this.state.theParksFromMiamiDade });
+      this.setState({
+        filteredParks: this.state.theParksFromMiamiDade,
+        filteredEvents: this.state.theEventsFromIronrest,
+        selectedOption: "all"
+      });
     }
   };
 
@@ -174,18 +204,18 @@ class App extends Component {
                   listOfParks={this.state.theParksFromMiamiDade}
                   listOfEvents={this.state.filteredEvents}
                   ready={this.state.ready}
-                  filterEventsFunction={this.filterEventsFunction}
+                  filterFunction={this.filterFunction}
                 />
               )}
             />
 
             {/* end testing */}
-           
+
             <Route
               exact
               path="/singlepark/:id"
               render={props => (
-                <SinplePark
+                <SinglePark
                   {...props}
                   listOfParks={this.state.theParksFromMiamiDade}
                   listOfEvents={this.state.theEventsFromIronrest}
@@ -201,7 +231,8 @@ class App extends Component {
                   {...props}
                   listOfParks={this.state.filteredParks}
                   ready={this.state.ready}
-                  parkFilterFunction={this.parkFilterFunction}
+                  filterFunction={this.filterFunction}
+                  selectedOption={this.state.selectedOption}
                 />
               )}
             />
@@ -213,40 +244,35 @@ class App extends Component {
                   {...props}
                   listOfEvents={this.state.filteredEvents}
                   ready={this.state.ready}
-                  filterEventsFunction={this.filterEventsFunction}
+                  filterFunction={this.filterFunction}
+                  selectedOption={this.state.selectedOption}
                 />
               )}
             />
             <Route
               exact
-              path="/maptest/"
+              path="/eventsmap/"
               render={props => (
-                <MapTest
+                <MapOfEvents
                   {...props}
-                  listOfParks={this.state.filteredEvents}
-                  parkFilterFunction={this.filterEventsFunction}
+                  // listOfParks={this.state.filteredEvents}
+                  filterFunction={this.filterFunction}
+                  eventData={this.state.filteredEvents}
+                  center={{ lat: 25.7617, lng: -80.1918 }}
+                  selectedOption={this.state.selectedOption}
                 />
               )}
             />
             <Route
               exact
-              path="/map/"
+              path="/parksmap/"
               render={props => (
-                <Map
+                <MapOfParks
                   {...props}
-                  listOfParks={this.state.filteredParks}
-                  parkFilterFunction={this.parkFilterFunction}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/mapevents/"
-              render={props => (
-                <MapEvents
-                  {...props}
-                  listOfParks={this.state.filteredEvents}
-                  parkFilterFunction={this.filterEventsFunction}
+                  parkData={this.state.filteredParks}
+                  filterFunction={this.filterFunction}
+                  center={{ lat: 25.7617, lng: -80.1918 }}
+                  selectedOption={this.state.selectedOption}
                 />
               )}
             />

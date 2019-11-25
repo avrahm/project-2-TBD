@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import Header from "../Header/Header";
 import Loading from "./Loading/loading";
+import FilterMenu from './FilterMenu'
 
 export default class ListOfParks extends Component {
+
+
   showParks = () => {
     return this.props.listOfParks.map((eachPark, i) => {
       return (
@@ -22,6 +25,8 @@ export default class ListOfParks extends Component {
       );
     });
   };
+
+
   render() {
     // console.log(this.props.listOfParks)
     if (this.props.listOfParks)
@@ -30,40 +35,7 @@ export default class ListOfParks extends Component {
           {/* <Header /> */}
           <h1>List of Parks</h1>
 
-          <div className="menu">
-            <h1>Filter</h1>
-            basketball:{" "}
-            <input
-              type="checkbox"
-              name="basketball"
-              onClick={this.props.parkFilterFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            soccer:{" "}
-            <input
-              type="checkbox"
-              name="soccer"
-              onClick={this.props.parkFilterFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            baseball:{" "}
-            <input
-              type="checkbox"
-              name="baseball"
-              onClick={this.props.parkFilterFunction}
-              // onClick={this.eventHandler}
-            />
-            <br />
-            yoga:{" "}
-            <input
-              type="checkbox"
-              name="yoga"
-              onClick={this.props.parkFilterFunction}
-              // onClick={this.eventHandler}
-            />
-          </div>
+         <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction}/>
           {this.showParks()}
         </div>
       );
