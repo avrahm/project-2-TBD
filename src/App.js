@@ -125,33 +125,6 @@ class App extends Component {
       });
   };
 
-  // filterFunction = e => {
-  //   // console.log(e.target.name)
-  //   let eventsFiltered;
-  //   let sportButton = e.target.name;
-  //   //if target checked is true then filter events by sport with the target name (ie. basketball, soccer, etc)
-  //   if (sportButton === "all") {
-  //     this.setState({
-  //       filteredEvents: this.state.theEventsFromIronrest,
-  //       selectedOption: e.target.name
-  //     });
-  //   } else if (e.target.checked === true) {
-  //     eventsFiltered = this.state.theEventsFromIronrest.filter(
-  //       res => res.event.sport === e.target.name
-  //     );
-  //     this.setState({
-  //       filteredEvents: eventsFiltered,
-  //       selectedOption: e.target.name
-  //     });
-  //     // console.log(eventsFilter)
-  //   } else {
-  //     this.setState({
-  //       filteredEvents: this.state.theEventsFromIronrest,
-  //       selectedOption: "all"
-  //     });
-  //   }
-  // };
-
   filterFunction = e => {
     let parksFiltered;
     let eventsFiltered;
@@ -246,33 +219,6 @@ class App extends Component {
                   listOfEvents={this.state.filteredEvents}
                   ready={this.state.ready}
                   filterFunction={this.filterFunction}
-                  selectedOption={this.state.selectedOption}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/eventsmap/"
-              render={props => (
-                <MapOfEvents
-                  {...props}
-                  // listOfParks={this.state.filteredEvents}
-                  filterFunction={this.filterFunction}
-                  eventData={this.state.filteredEvents}
-                  center={{ lat: 25.7617, lng: -80.1918 }}
-                  selectedOption={this.state.selectedOption}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/parksmap/"
-              render={props => (
-                <MapOfParks
-                  {...props}
-                  parkData={this.state.filteredParks}
-                  filterFunction={this.filterFunction}
-                  center={{ lat: 25.7617, lng: -80.1918 }}
                   selectedOption={this.state.selectedOption}
                 />
               )}

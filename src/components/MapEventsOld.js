@@ -140,7 +140,7 @@ export class MapContainer extends Component {
             </div>
           </InfoWindowEx>
         </Map>
-        <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction}/>
+        <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction} />
          </div>
     );
   }

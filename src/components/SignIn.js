@@ -12,7 +12,7 @@ export default class SignIn extends Component {
     this.setState({
       loginPage: false
     });
-    myHistory.push("/map/");
+    myHistory.push("/maptesting/");
   };
   render() {
     return (
