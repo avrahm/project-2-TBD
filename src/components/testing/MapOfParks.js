@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import InfoWindowEx from "./InfoWindowEx";
-import { myHistory } from "../index.js";
+import InfoWindowEx from "../InfoWindowEx";
+import { myHistory } from "../../index.js";
 // import UserMarker from "./UserMarker";
-import FilterMenu from "./FilterMenu"
+import FilterMenu from "../FilterMenu"
 
 export class MapContainer extends Component {
   constructor(props) {

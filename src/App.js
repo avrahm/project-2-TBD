@@ -10,8 +10,6 @@ import Header from "./components/Header/Header";
 import axios from "axios";
 import SingleEvent from "./components/SingleEvent";
 import { myHistory } from "./index.js";
-import MapOfParks from "./components/MapOfParks.js";
-import MapOfEvents from "./components/MapOfEvents.js";
 import Loading from "./components/Loading/loading";
 import SignIn from "./components/SignIn";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,13 +24,18 @@ class App extends Component {
     theEventsFromIronrest: null,
     ready: false,
     message: "",
-    sports: ["soccer", "basketball", "yoga"],
+    sports: ["soccer", "basketball", "volleyball", "baseball"],
     filteredEvents: [],
     filteredParks: [],
     basketball: true,
     soccer: false,
     yoga: false,
-    selectedOption: ""
+    selectedOption: "all",
+    eventDescriptionLorem: ["Foul line 4-bagger slide hardball outfielder, rally left on base field. Fair right field 1-2-3 dead red bag passed ball double play. At-bat bleeder warning track starter wins cycle arm reds around the horn. Bunt shift shutout off-speed second base left on base rip sacrifice. Gap robbed outside range right fielder hey batter national pastime wins. Fair first base bunt chin music pine tar hot dog dead ball era astroturf lineup.",
+    "Leadoff airmail team at-bat bunt at-bat field fan. Second baseman earned run sacrifice fly squeeze third base loss second base. World series cup of coffee stadium field 1-2-3, out fastball. Rally ground ball stretch rake sweep stretch left fielder gapper rally. No-hitter sacrifice bunt bag fall classic league second base rip. Cycle rally dodgers friendly confines take butcher boy sacrifice fly.",
+    "Bleeder full count series first baseman contact ground ball outfield. Take astroturf third base cellar fielder's choice line drive can of corn in the hole. Bunt helmet series ground ball peanuts count base on balls. Starter count extra innings choke up left field petey pine tar. Robbed count good eye losses pinch hitter, sabremetrics error. Basehit mound extra innings warning track baseball pitchout rookie blue bush league.",
+    "Cardinals doubleheader nubber sacrifice bunt mitt silver slugger national pastime left fielder mendoza line. No decision assist left field outfield around the horn, 4-bagger swing walk off dodgers. Fair rhubarb run batted in second baseman starting pitcher gapper catcher. Astroturf stretch left field helmet loogy no decision force. Rotation baltimore chop butcher boy suicide squeeze third base slugging bases loaded strikeout play. Strikeout world series baltimore chop robbed second base left fielder line drive.",
+    "Ejection balk bench game grounder ground ball gapper. Forkball grand slam cheese pennant leather tigers bag balk airmail. 1-2-3 range run loogy steal bat wild pitch bench cellar. Grass backstop sport shift second baseman plate foul mendoza line. Full count cork game good eye chin music, team field rally season. League rubber cup of coffee passed ball unearned run outfielder slide warning track."]
   };
 
   componentDidMount() {
@@ -68,6 +71,19 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
+
+    // axios
+    //   .get("http://skateipsum.com/get/1/0/JSON")
+    //   .then(res => {
+    //     let x = res;
+        
+    //     this.setState({
+    //       eventDescriptionLorem: x
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   submitNewEvent = (
@@ -128,26 +144,26 @@ class App extends Component {
   filterFunction = e => {
     let parksFiltered;
     let eventsFiltered;
-    let sportButton = e.target.name.toUpperCase();
+    let sportButton = e.target.id.toUpperCase();
     // console.log(sportButton)
     //if target checked is true then filter parks by sport with the target name (ie. basketball, soccer, etc)
-    if (e.target.name === "all") {
+    if (e.target.id === "all") {
       this.setState({
         filteredParks: this.state.theParksFromMiamiDade,
         filteredEvents: this.state.theEventsFromIronrest,
-        selectedOption: e.target.name
+        selectedOption: e.target.id
       });
     } else if (e.target.checked === true) {
       parksFiltered = this.state.theParksFromMiamiDade.filter(
         res => res.attributes[sportButton] === "Yes"
       );
       eventsFiltered = this.state.theEventsFromIronrest.filter(
-        res => res.event.sport === e.target.name
+        res => res.event.sport === e.target.id
       );
       this.setState({
         filteredParks: parksFiltered,
         filteredEvents: eventsFiltered,
-        selectedOption: e.target.name
+        selectedOption: e.target.id
       });
       // console.log(this.state.parks)
     } else {
@@ -161,6 +177,7 @@ class App extends Component {
 
   render() {
     // {console.log(myHistory)}
+    // console.log(this.state.eventDescriptionLorem);
     if (this.state.ready) {
       return (
         <div className="App">
@@ -245,6 +262,7 @@ class App extends Component {
                   message={this.state.message}
                   submitEventFunction={this.submitNewEvent}
                   sports={this.state.sports}
+                  descriptionLorem={this.state.eventDescriptionLorem}
                 />
               )}
             />

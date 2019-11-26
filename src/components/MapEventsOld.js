@@ -82,7 +82,7 @@ export class MapContainer extends Component {
 
   render() {
     return (
-      <div className="map-container">
+      <div>
         <Map
           google={this.props.google}
           className={"map"}

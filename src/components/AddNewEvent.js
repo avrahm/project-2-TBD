@@ -4,10 +4,9 @@ import React, { Component } from "react";
 import Loading from "./Loading/loading";
 
 export default class AddNewEvent extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      sports: ["soccer", "basketball", "volleyball","baseball"],
       title: "Event " + Math.floor(Math.random() * 1000),
       location: {
         address: "",
@@ -16,7 +15,7 @@ export default class AddNewEvent extends Component {
         name: "",
         id: ""
       },
-      description: "This is the description",
+      description: "",
       sport: "",
       date:
         Math.floor(Math.random() * 11 + 1) +
@@ -31,6 +30,7 @@ export default class AddNewEvent extends Component {
       message: ""
     };
   }
+  
 
   handleInput = e => {
     // console.log(e.target.value)
@@ -40,6 +40,7 @@ export default class AddNewEvent extends Component {
   };
 
   render() {
+    // console.log(this.props.description)
     setTimeout(() => {
       this.setState({
         location: {
@@ -65,8 +66,8 @@ export default class AddNewEvent extends Component {
                 e,
                 this.state.title,
                 this.state.location,
-                this.state.description,
-                this.state.sports[Math.floor(Math.random() * 4)],
+                this.props.descriptionLorem[Math.floor(Math.random() * 4)],
+                this.props.sports[Math.floor(Math.random() * 3)],
                 this.state.date,
                 this.state.time,
                 this.state.user
@@ -129,7 +130,7 @@ export default class AddNewEvent extends Component {
               name="description"
               height="100px"
               onChange={this.handleInput}
-              defaultValue={this.state.description}
+              value={this.props.descriptionLorem[Math.floor(Math.random() * 4)]}
             ></textarea>
             <label htmlFor="sport">Sport</label>
             <input
@@ -137,7 +138,7 @@ export default class AddNewEvent extends Component {
               type="text"
               name="sport"
               onChange={this.handleInput}
-              defaultValue={this.state.sports[Math.floor(Math.random() * 2)]}
+              value={this.props.sports[Math.floor(Math.random() * 2)]}
               // {this.state.sport}
             />
             <label htmlFor="date">Date</label>

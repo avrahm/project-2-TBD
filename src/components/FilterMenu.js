@@ -1,79 +1,129 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBaseballBall,
-  faBasketballBall,
-  faVolleyballBall,
-  faFutbol,
-  faSearch
+  // faBaseballBall,
+  // faBasketballBall,
+  // faVolleyballBall,
+  // faFutbol,
+  // faSearch,
+  faFilter
 } from "@fortawesome/free-solid-svg-icons";
 
 export default class FilterMenu extends Component {
-
   state = {
-    searchMenuToggle: true
+    activeLink: ""
   };
-  searchMenu = () => {
-    this.setState({
-      searchMenuToggle: false
-    });
-
-  }
+  searchMenu = e => {
+    this.setState({});
+  };
   render() {
-
     return (
-      <div >
-      <button className="menu-button" onClick={this.searchMenu}>
-            <FontAwesomeIcon icon={faSearch} className="menu-icon" />
-            <br /> Search
-          </button>
-        <div className={this.state.searchMenuToggle ? "filter-menu" : "filter-menu hide"}>
-          
-          All:{" "}
-          <input
-            type="radio"
-            name="all"
-            onClick={this.props.filterFunction}
-            onChange={this.eventHandler}
-            checked={this.props.selectedOption === "all"}
+      <div className="filter-menu filter-label-selector">
+        <label>
+          <FontAwesomeIcon
+            icon={faFilter}
+            className="filter-menu-icon filter-label"
           />
-          Basketball:{" "}
-          <input
-            type="radio"
-            name="basketball"
-            onClick={this.props.filterFunction}
-            onChange={this.eventHandler}
-            checked={this.props.selectedOption === "basketball"}
-          />
-          <br />
-          Soccer:{" "}
-          <input
-            type="radio"
-            name="soccer"
-            onClick={this.props.filterFunction}
-            onChange={this.eventHandler}
-            checked={this.props.selectedOption === "soccer"}
-          />
-          <br />
-          Baseball:{" "}
-          <input
-            type="radio"
-            name="baseball"
-            onClick={this.props.filterFunction}
-            onChange={this.eventHandler}
-            checked={this.props.selectedOption === "baseball"}
-          />
-          <br />
-          Volleyball:{" "}
-          <input
-            type="radio"
-            name="volleyball"
-            onClick={this.props.filterFunction}
-            onChange={this.eventHandler}
-            checked={this.props.selectedOption === "volleyball"}
-          />
-        </div>
+        </label>
+        <label
+          className={
+            this.props.selectedOption === "all"
+              ? "filter-label active"
+              : "filter-label"
+          }
+          htmlFor="all"
+        >
+          All
+        </label>
+        <input
+          type="radio"
+          id="all"
+          name="filter-sport"
+          onClick={this.props.filterFunction}
+          onChange={this.eventHandler}
+          defaultChecked={this.props.selectedOption === "all"}
+        />
+
+        <label
+          className={
+            this.props.selectedOption === "basketball"
+              ? "filter-label active"
+              : "filter-label"
+          }
+          htmlFor="basketball"
+        >
+          Basketball
+        </label>
+        <input
+          type="radio"
+          id="basketball"
+          name="filter-sport"
+          onClick={this.props.filterFunction}
+          onChange={this.eventHandler}
+          defaultChecked={this.props.selectedOption === "basketball"}
+        />
+        <br />
+
+        <label
+          className={
+            this.props.selectedOption === "soccer"
+              ? "filter-label active"
+              : "filter-label"
+          }
+          htmlFor="soccer"
+        >
+          Soccer
+        </label>
+        <input
+          type="radio"
+          id="soccer"
+          name="filter-sport"
+          onClick={this.props.filterFunction}
+          onChange={this.eventHandler}
+          defaultChecked={this.props.selectedOption === "soccer"}
+        />
+        <br />
+        <label
+          className={
+            this.props.selectedOption === "baseball"
+              ? "filter-label active"
+              : "filter-label"
+          }
+          htmlFor="baseball"
+        >
+          Baseball
+        </label>
+
+        <input
+          type="radio"
+          id="baseball"
+          name="filter-sport"
+          onClick={this.props.filterFunction}
+          onChange={this.eventHandler}
+          defaultChecked={this.props.selectedOption === "baseball"}
+        />
+        <br />
+        <label
+          className={
+            this.props.selectedOption === "volleyball"
+              ? "filter-label active"
+              : "filter-label"
+          }
+          htmlFor="volleyball"
+        >
+          Volleyball
+        </label>
+
+        <input
+          type="radio"
+          id="volleyball"
+          name="filter-sport"
+          onClick={this.props.filterFunction}
+          onChange={this.eventHandler}
+          defaultChecked={this.props.selectedOption === "volleyball"}
+        />
       </div>
+      // </div>
     );
   }
 }

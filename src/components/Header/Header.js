@@ -6,7 +6,7 @@ import { faMap, faTree, faCalendar, faCalendarPlus, faSearch } from '@fortawesom
 export default class Header extends Component {
   render() {
     return (
-      <div className="nav-menu d-flex flex-column">
+      <div className="nav-menu">
         <Link to="/maptesting/" className="menu-button">
           <FontAwesomeIcon icon={faMap} className="menu-icon" />
           <br />Map

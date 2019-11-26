@@ -1,68 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-// import Header from "../Header/Header";
-import Axios from "axios";
-import FilterMenu from "./FilterMenu"
-
-//import images
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => {
-    return (images[item.replace("./", "")] = r(item));
-  });
-  return images;
-}
-
-const images = importAll(
-  require.context("../images", false, /\.(png|jpe?g|svg)$/)
-);
+import FilterMenu from "./FilterMenu";
+import EventCard from "./EventCard";
 
 export default class ListOfEvents extends Component {
-  deleteEvent = e => {
-    let deleteId = e.target.name;
-    Axios.delete("https://ironrest.herokuapp.com/avrahm/" + deleteId)
-      .then(res => {
-        console.log("deleted");
-
-        window.location.reload()
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    // console.log(e.target.name)
-  };
+  
   showEvents = () => {
-    // console.log(this.props.listOfEvents.event.name)
     return this.props.listOfEvents.map((eachEvent, i) => {
-      // console.log(eachEvent)
-
-      return (
-        <div className="container d-flex flex-row event-card" key={i}>
-          {" "}
-          <Link to={"/singleevent/" + eachEvent._id}>
-            <div className="col-4">
-              <img
-                src={images[eachEvent.event.img]}
-                alt={eachEvent.event.name}
-                height="100px"
-              />
-            </div>
-          </Link>
-          <div className="col-8">
-            <Link to={"/singleevent/" + eachEvent._id}>
-              <h4 className="title">{eachEvent.event.title}</h4>
-              <h4 className="location-name">{eachEvent.event.location.name}</h4>
-            </Link>
-            <button name={eachEvent._id} id={i} onClick={this.deleteEvent}>
-              delete
-            </button>
-
-            {/* Date: {eachEvent[i].date} */}
-            {/* <p className="contributor">Phone: {eachEvent.PHONE}</p> */}
-          </div>
-        </div>
-      );
+      return <EventCard eachEvent={eachEvent} key={i} />;
     });
   };
 
@@ -70,11 +14,15 @@ export default class ListOfEvents extends Component {
     if (this.props.listOfEvents)
       return (
         <div>
-          {/* <Header /> */}
-
+          <FilterMenu
+            selectedOption={this.props.selectedOption}
+            filterFunction={this.props.filterFunction}
+          />
           <h1>List of Events</h1>
-          <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction}/>
+          <div className="d-flex flex-wrap justify-content-around">
+
           {this.showEvents()}
+          </div>
         </div>
       );
     else return <div>Loading...</div>;
