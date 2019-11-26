@@ -1,11 +1,34 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBaseballBall,
+  faBasketballBall,
+  faVolleyballBall,
+  faFutbol,
+  faSearch
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class FilterMenu extends Component {
+
+  state = {
+    searchMenuToggle: true
+  };
+  searchMenu = () => {
+    this.setState({
+      searchMenuToggle: false
+    });
+
+  }
   render() {
+
     return (
-      <div>
-        <div className="filter-menu">
-          <h3>Filter</h3>
+      <div >
+      <button className="menu-button" onClick={this.searchMenu}>
+            <FontAwesomeIcon icon={faSearch} className="menu-icon" />
+            <br /> Search
+          </button>
+        <div className={this.state.searchMenuToggle ? "filter-menu" : "filter-menu hide"}>
+          
           All:{" "}
           <input
             type="radio"

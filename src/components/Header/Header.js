@@ -32,10 +32,7 @@ export default class Header extends Component {
         <FontAwesomeIcon icon={faCalendarPlus} className="menu-icon"  />
         <br /> Add Event
         </Link>
-        <button className="menu-button" onClick={this.searchMenu}>
-        <FontAwesomeIcon icon={faSearch} className="menu-icon"  />
-        <br /> Search
-        </button>
+       
         {/* <Link to="/singleevent/" className="btn btn-lg btn-outline-danger">
       <div>Random Event</div>
       </Link> */}
