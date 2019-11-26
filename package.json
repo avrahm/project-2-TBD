@@ -23,6 +23,7 @@
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "react": "^16.9.0",
+    "react-datepicker": "^2.10.1",
     "react-dom": "^16.9.0",
     "react-geolocated": "^3.0.1",
     "react-router-dom": "^5.1.2",

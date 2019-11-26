@@ -6,6 +6,7 @@ import { myHistory } from "../index.js";
 import FilterMenu from "./FilterMenu"
 import parkImg from "../images/park-map.png"
 import eventImg from "../images/league-map.png"
+import Loading from "./Loading/loading"
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -48,7 +49,6 @@ export class MapContainer extends Component {
 
   showDetails = () => {
     myHistory.push(this.state.selectedPlaceLink+this.state.selectedPlaceId)
-   
   };
 
   getLocation = () => {
@@ -81,6 +81,7 @@ export class MapContainer extends Component {
   };
 
   render() {
+    if (this.props.ready) {
     return (
       <div>
         <Map
@@ -142,7 +143,9 @@ export class MapContainer extends Component {
         </Map>
         <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction} />
          </div>
-    );
+    ); } else {
+      return <Loading />;
+    }
   }
 }
 

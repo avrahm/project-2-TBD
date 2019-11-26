@@ -196,6 +196,7 @@ class App extends Component {
                   filterFunction={this.filterFunction}
                   center={{ lat: 25.7617, lng: -80.1918 }}
                   selectedOption={this.state.selectedOption}
+                  ready={this.state.ready}
                 />
               )}
             />

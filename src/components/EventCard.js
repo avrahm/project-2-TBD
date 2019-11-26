@@ -38,32 +38,32 @@ export default class EventCard extends Component {
               backgroundImage:
                 "url(" + images[this.props.eachEvent.event.img] + ")"
             }}
-          >
-          </div>
+          ></div>
         </Link>
-          <div className="event-card-info">
-            <h4 className="title">{this.props.eachEvent.event.title}</h4>
-            <div className="row">
-              <div className="col-6">
-                <p className="date flex-row">
-                  <FontAwesomeIcon icon={faCalendarAlt} />
-                  {this.props.eachEvent.event.date}
-                </p>
-                <p className="time">
-                  <FontAwesomeIcon icon={faClock} />
-                  {this.props.eachEvent.event.time}
-                </p>
-              </div>
-              <div className="col-6">
-                <h5 className="location-name">
-                  {this.props.eachEvent.event.location.name}
-                </h5>
-              </div>
+        <div className="event-card-info">
+          <h4 className="title">{this.props.eachEvent.event.title}</h4>
+          <div className="row">
+            <div className="col-6">
+              <p className="date flex-row d-flex align-items-center">
+                <FontAwesomeIcon icon={faCalendarAlt} />
+                <span>{this.props.eachEvent.event.date}</span>
+              </p>
+              <p className="time flex-row d-flex align-items-center">
+                <FontAwesomeIcon icon={faClock} />
+                <span>{this.props.eachEvent.event.time}</span>
+              </p>
             </div>
-
-            {/* Date: {this.props.eachEvent[i].date} */}
-            {/* <p className="contributor">Phone: {this.props.eachEvent.PHONE}</p> */}
+            <div className="col-6">
+              <h5 className="location-name">
+                {this.props.eachEvent.event.location.name}
+              </h5>
+              <h6>{this.props.eachEvent.event.location.address}</h6>
+            </div>
           </div>
+
+          {/* Date: {this.props.eachEvent[i].date} */}
+          {/* <p className="contributor">Phone: {this.props.eachEvent.PHONE}</p> */}
+        </div>
         <button
           className="hide"
           name={this.props.eachEvent._id}

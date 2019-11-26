@@ -7,8 +7,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Router } from 'react-router-dom';
 export const myHistory = require("history").createBrowserHistory()
 
-// export const myHistory = createBrowserHistory()
-
 
 ReactDOM.render(
   <Router history={myHistory}>

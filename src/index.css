@@ -2,7 +2,12 @@ body {
   margin: 100px;
   padding: 0 0 150px 0;
   font-family: Arial Narrow;
+  /* background-color: rgba(128, 128, 128, 0.781); */
 }
+
+/* .App {
+  background-color: rgba(204, 204, 204, 0.705);
+} */
 
 .tagline {
   color: gray;
@@ -59,15 +64,26 @@ body {
 .hide {
   display: none;
 }
+
 .event-card {
-  border: 2px solid black;
-  margin: 10px;
+  border: 1px solid rgba(116, 115, 115, 0.808);
+  margin: 5px;
   padding: 0 !important;
   border-radius: 10px;
   box-shadow: black;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
 }
-.event-card a{
+
+.event-card:hover {
   text-decoration: none;
+  box-shadow: 0 32px 64px 0 rgba(0, 0, 0, 0.4);
+}
+
+.event-card .date span,
+.event-card .time span {
+  padding-left: 10px;
 }
 
 .event-card-heading {
@@ -81,10 +97,6 @@ body {
 
 .event-card-info {
   padding: 10px;
-}
-
-.event-card-info svg, #text {
-  margin: 5px;
 }
 
 .nav-menu {
@@ -172,4 +184,19 @@ body {
 .active {
   background-color: rgba(35, 165, 35, 0.932) !important;
   color: white;
+}
+
+
+.event-page-heading {
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0 !important;
+    border-radius: 8px;
+}
+
+.event-page-map {
+  width: 100px;
+  height: 100px;
 }
