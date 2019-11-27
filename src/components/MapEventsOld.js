@@ -47,8 +47,6 @@ export class MapContainer extends Component {
     myHistory.push(this.state.selectedPlaceLink+this.state.selectedPlaceId)
   };
 
-
-
   render() {
     if (this.props.ready) {
     return (
@@ -104,7 +102,7 @@ export class MapContainer extends Component {
             visible={this.state.showingInfoWindow}
           >
             <div>
-              <h3>{this.state.selectedPlaceName}</h3>
+              <h4>{this.state.selectedPlaceName}</h4>
               <button
                 type="button"
                 onClick={this.showDetails.bind(this, this.state.selectedPlace)}

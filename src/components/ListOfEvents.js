@@ -19,7 +19,7 @@ export default class ListOfEvents extends Component {
             filterFunction={this.props.filterFunction}
           />
           <h1>List of Events</h1>
-          <div className="d-flex flex-wrap justify-content-center">
+          <div className="container d-flex flex-wrap justify-content-center">
 
           {this.showEvents()}
           </div>

@@ -7,7 +7,7 @@ export default class AddNewEvent extends Component {
   constructor(props) {
     super();
     this.state = {
-      title: "Event " + Math.floor(Math.random() * 1000),
+      title: "",
       location: {
         address: "",
         lat: "",
@@ -30,7 +30,6 @@ export default class AddNewEvent extends Component {
       message: ""
     };
   }
-  
 
   handleInput = e => {
     // console.log(e.target.value)
@@ -44,16 +43,21 @@ export default class AddNewEvent extends Component {
     setTimeout(() => {
       this.setState({
         location: {
-          name: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes.NAME,
-          address: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes.ADDRESS,
-          lat: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes.LAT,
-          lon: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes.LON,
-          id: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes.ID
+          name: this.props.listOfParks[Math.floor(Math.random() * 792)]
+            .attributes.NAME,
+          address: this.props.listOfParks[Math.floor(Math.random() * 792)]
+            .attributes.ADDRESS,
+          lat: this.props.listOfParks[Math.floor(Math.random() * 792)]
+            .attributes.LAT,
+          lon: this.props.listOfParks[Math.floor(Math.random() * 792)]
+            .attributes.LON,
+          id: this.props.listOfParks[Math.floor(Math.random() * 792)].attributes
+            .ID
         }
-      })
+      });
       //Math.floor(Math.random() * 20000) + " SW " + Math.floor(Math.random() * 200) + " St",
       // console.log(this.props.listOfParks.length)
-    }, 2000);
+    }, 4000);
     if (this.props.listOfParks)
       return (
         <div>
@@ -64,24 +68,31 @@ export default class AddNewEvent extends Component {
             onSubmit={e => {
               this.props.submitEventFunction(
                 e,
-                this.state.title,
+                this.props.sports[Math.floor(Math.random() * 4)]
+                +" " +
+                  this.props.eventTitleOptions[Math.floor(Math.random() * 4)],
                 this.state.location,
-                this.props.descriptionLorem[Math.floor(Math.random() * 4)],
-                this.props.sports[Math.floor(Math.random() * 3)],
+                this.props.descriptionLorem[Math.floor(Math.random() * 5)],
+                this.props.sports[Math.floor(Math.random() * 4)],
                 this.state.date,
                 this.state.time,
                 this.state.user
               );
             }}
           >
-            <button className="button btn-lg">Submit</button><br />
+            <button className="button btn-lg">Submit</button>
+            <br />
             <label htmlFor="title">title</label>
             <input
               className="form-control"
               type="text"
               name="title"
               onChange={this.handleInput}
-              defaultValue={this.state.title}
+              defaultValue={
+                this.props.sports[Math.floor(Math.random() * 2)] +
+                " " +
+                this.props.eventTitleOptions[Math.floor(Math.random() * 4)]
+              }
             />
             <label htmlFor="location">Location ID</label>
             <input

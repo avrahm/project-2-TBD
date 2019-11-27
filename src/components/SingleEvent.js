@@ -1,11 +1,6 @@
 import React from "react";
-// import axios from "axios";
 import { Link } from "react-router-dom";
-import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import InfoWindowEx from "./InfoWindowEx";
-import { myHistory } from "../index.js";
-
-import eventImg from "../images/league-map.png";
+import MapComponent from "./MapComponent";
 import Loading from "./Loading/Loading";
 
 //import images dynamically to the img src value
@@ -22,26 +17,9 @@ const images = importAll(
 );
 
 class EventPage extends React.Component {
-  state = {
-    center: {
-      lat: 25.7617,
-      lng: -80.1918
-    },
-    zoom: 10,
-
-    showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {}
-  };
-  showDetails = () => {
-    myHistory.push(this.state.selectedPlaceLink + this.state.selectedPlaceId);
-  };
   render() {
     // console.log(this.state.theEvent)
-    const style = {
-      width: '100%',
-      height: '200px'
-    }
+
     if (this.props.listOfEvents) {
       let theEventDetails = this.props.listOfEvents.find(event => {
         return event._id === this.props.match.params.id;
@@ -52,9 +30,7 @@ class EventPage extends React.Component {
           <div
             className="container-fluid event-page-heading"
             style={{ backgroundImage: "url(" + images[theEvent.img] + ")" }}
-          >
-            {/* <img src={images[theEvent.img]} alt={theEvent.title} height="200px" /> */}
-          </div>
+          ></div>
           <div className="container">
             <div className="row">
               <div className="col-12 event-title">
@@ -73,48 +49,18 @@ class EventPage extends React.Component {
                 <h5>Sport: {theEvent.sport.toUpperCase()}</h5>
                 <p>{theEvent.description}</p>
               </div>
-              <div className="col-12 col-md-5 event-page-location">
-               <h4>Map</h4>
+              <div className="col-12 col-md-5 event-page-location map">
+                <h4>Map</h4>
                 <Link to={"/singlepark/" + theEvent.location.id}>
                   <h4>{theEvent.location.name}</h4>
                 </Link>
                 <p>{theEvent.location.address}</p>
-                <Map
-                  google={this.props.google}
-                  style={style}
-                  zoom={this.state.zoom}
-                  initialCenter={this.state.center}
-                >
-                  <Marker
-                    onClick={this.onMarkerClick}
-                    key={theEvent._id}
-                    id={"event"}
-                    place_={theEvent}
-                    icon={{ url: eventImg }}
-                    position={{
-                      lat: theEvent.location.lat,
-                      lng: theEvent.location.lon
-                    }}
-                  />
-                  <InfoWindowEx
-                    marker={this.state.activeMarker}
-                    visible={this.state.showingInfoWindow}
-                  >
-                    <div>
-                      <h3>{this.state.selectedPlaceName}</h3>
-                      <button
-                        type="button"
-                        onClick={this.showDetails.bind(
-                          this,
-                          this.state.selectedPlace
-                        )}
-                      >
-                        Show details
-                      </button>
-                    </div>
-                  </InfoWindowEx>
-                </Map>
-              
+                <MapComponent
+                  lat={theEvent.location.lat}
+                  lon={theEvent.location.lon}
+                  details={theEvent}
+                  id="event"
+                />
               </div>
             </div>
           </div>
@@ -126,6 +72,4 @@ class EventPage extends React.Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyDZiBSkaZztK2mN3Q8QzvzcfPCsDX2_p58"
-})(EventPage);
+export default EventPage;

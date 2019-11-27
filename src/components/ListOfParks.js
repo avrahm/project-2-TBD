@@ -10,7 +10,7 @@ export default class ListOfParks extends Component {
   showParks = () => {
     return this.props.listOfParks.map((eachPark, i) => {
       return (
-       <ParkCard eachPark={eachPark} i={i} userLocation={this.props.userLocation} distanceFunction={this.props.distanceFunction} />
+       <ParkCard eachPark={eachPark} key={i} distance={this.props.distanceFunction(this.props.userLocation.latitude,this.props.userLocation.longitude,eachPark.attributes.LAT,eachPark.attributes.LON,"N")} />
        );
     });
   };
@@ -22,8 +22,12 @@ export default class ListOfParks extends Component {
         <div>
          <FilterMenu selectedOption={this.props.selectedOption} filterFunction={this.props.filterFunction} />
           <h1>List of Parks</h1>
+          <div className="container d-flex flex-wrap">
+  
           {this.showParks()}
+          </div>
         </div>
+
       );
     else return <Loading />;
   }

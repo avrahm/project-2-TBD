@@ -24,7 +24,8 @@ class App extends Component {
     theEventsFromIronrest: null,
     ready: false,
     message: "",
-    sports: ["soccer", "basketball", "volleyball", "baseball"],
+    sports: ["Soccer", "Basketball", "Volleyball", "Baseball"],
+    eventTitleOptions: ["Pick-Up", "League",  "Practice", "Try-Outs"],
     filteredEvents: [],
     filteredParks: [], 
     userLocation: {
@@ -124,9 +125,10 @@ class App extends Component {
     e.preventDefault();
 
     // let theEventsCopy = {...this.state.theEventsFromIronrest}
-    let imgGen = sport + Math.floor(Math.random() * 2) + ".jpg";
+    let imgGen = sport.toLowerCase() + Math.floor(Math.random() * 3) + ".jpg";
+    let titleGen = sport +" "+ this.state.eventTitleOptions[Math.floor(Math.random() * 3) ]
     const newEvent = {
-      title: title,
+      title: titleGen,
       location: location,
       description: description,
       sport: sport,
@@ -156,6 +158,53 @@ class App extends Component {
               });
               myHistory.push("/singleevent/" + res.data.ops[0]._id);
             }, 1000)
+        );
+      })
+      .catch(err => {
+        // console.error(err)
+        this.setState({
+          message: "Error!"
+        });
+      });
+  };
+
+  submitParkUpdateFunction = (
+    e,
+    location,
+    sport,
+    phone,
+    user
+  ) => {
+    e.preventDefault();
+
+    // let theEventsCopy = {...this.state.theEventsFromIronrest}
+    const parkUpdate = {
+      location: location,
+      sport: sport,
+      phone: phone,
+      user: user
+    };
+
+    axios
+      .post("https://ironrest.herokuapp.com/avrahm", { event: parkUpdate })
+      .then(res => {
+        // let eventCopy = [...this.state.theEventsFromIronrest];
+        // console.log(res)
+        // eventCopy.push(res.data.ops[0]);
+        // console.log(event)
+        // console.log(res)
+        this.setState(
+          {
+            message: "Posted Successfully",
+            // theEventsFromIronrest: eventCopy
+          },
+          // () =>
+          //   setTimeout(() => {
+          //     this.setState({
+          //       message: ""
+          //     });
+          //     // myHistory.push("/singleevent/" + res.data.ops[0]._id);
+          //   }, 1000)
         );
       })
       .catch(err => {
@@ -205,7 +254,7 @@ class App extends Component {
         res => res.attributes[sportButton] === "Yes"
       );
       eventsFiltered = this.state.theEventsFromIronrest.filter(
-        res => res.event.sport === e.target.id
+        res => res.event.sport.toLowerCase() === e.target.id
       );
       this.setState({
         filteredParks: parksFiltered,
@@ -223,8 +272,6 @@ class App extends Component {
   };
 
   render() {
-    // {console.log(myHistory)}
-    // console.log(this.state.eventDescriptionLorem);
     if (this.state.ready) {
       return (
         <div className="App">
@@ -262,6 +309,8 @@ class App extends Component {
                   ready={this.state.ready}
                   userLocation={this.state.userLocation}
                   distanceFunction={this.distanceFunction}
+                  submitParkUpdateFunction={this.submitParkUpdateFunction}
+                  message={this.state.message}
                 />
               )}
             />
@@ -276,6 +325,7 @@ class App extends Component {
                   filterFunction={this.filterFunction}
                   selectedOption={this.state.selectedOption}
                   userLocation={this.state.userLocation}
+                  distanceFunction={this.distanceFunction}
                 />
               )}
             />
@@ -315,6 +365,7 @@ class App extends Component {
                   submitEventFunction={this.submitNewEvent}
                   sports={this.state.sports}
                   descriptionLorem={this.state.eventDescriptionLorem}
+                  eventTitleOptions={this.state.eventTitleOptions}
                 />
               )}
             />

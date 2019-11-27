@@ -12,11 +12,11 @@ export default class SignIn extends Component {
     this.setState({
       loginPage: false
     });
-    myHistory.push("/maptesting/");
+    myHistory.push("/searchmap/");
   };
   render() {
     return (
-      <div className={this.state.loginPage ? "login hide" : "login hide"}>
+      <div className={this.state.loginPage ? "login" : "login hide"}>
         <div className="login-menu">
          
             <img src={Logo} alt="SportsVybe Logo" className="logo" />

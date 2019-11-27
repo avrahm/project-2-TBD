@@ -2,8 +2,45 @@ import React from "react";
 import Loading from "./Loading/Loading.js";
 import EventCard from "./EventCard";
 import MapComponent from "./MapComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBasketballBall,
+  faVolleyballBall,
+  faFutbol,
+  faBaseballBall,
+  faCalendarPlus
+} from "@fortawesome/free-solid-svg-icons";
+function importAll(r) {
+  let images = {};
+  r.keys().map((item, index) => {
+    return (images[item.replace("./", "")] = r(item));
+  });
+  return images;
+}
 
+const images = importAll(
+  require.context("../images/parks", false, /\.(png|jpe?g|svg)$/)
+);
 class ParkPage extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      location: {
+        address: "",
+        name: "",
+      },
+      phone: "",
+      sport: "",
+      user: "User " + Math.floor(Math.random() * 1000),
+      message: ""
+    };
+  }
+  handleInput = e => {
+    // console.log(e.target.value)
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
   //find events for the list of event that match the current park
   eventsAtThisPark = () => {
     let copyOfParkList = this.props.listOfEvents.map((events, i) => {
@@ -22,9 +59,29 @@ class ParkPage extends React.Component {
       let thePark = this.props.listOfParks.find(park => {
         return park.attributes.ID === this.props.match.params.id;
       });
+      let listOfSports = [];
+      if (thePark.attributes.BASKETBALL === "Yes") {
+        listOfSports.push(<FontAwesomeIcon icon={faBasketballBall} />);
+      }
+      if (thePark.attributes.VOLLEYBALL === "Yes") {
+        listOfSports.push(<FontAwesomeIcon icon={faVolleyballBall} />);
+      }
+      if (thePark.attributes.BASEBALL === "Yes") {
+        listOfSports.push(<FontAwesomeIcon icon={faBaseballBall} />);
+      }
+      if (thePark.attributes.SOCCER === "Yes") {
+        listOfSports.push(<FontAwesomeIcon icon={faFutbol} />);
+      }
+      let parkImg = "park" + [Math.floor(Math.random() * 10)] + ".jpg";
 
       return (
-        <div>
+        <div className="event-page">
+          <div
+            className="container-fluid event-page-heading"
+            style={{
+              backgroundImage: "url(" + images[parkImg] + ")"
+            }}
+          ></div>
           <div className="container d-flex flex-column">
             <div className="row">
               <div className="col-12">
@@ -35,21 +92,30 @@ class ParkPage extends React.Component {
                   Address: {thePark.attributes.ADDRESS}
                 </h3>
                 <p>Phone: {thePark.attributes.PHONE}</p>
-                <p>Distance:{" "}
-                {this.props.distanceFunction(
-                  this.props.userLocation.latitude,
-                  this.props.userLocation.longitude,
-                  thePark.attributes.LAT,
-                  thePark.attributes.LON,
-                  "N"
-                )}</p>
-                <h3>Sports</h3>
-                <p>Basketball: {thePark.attributes.BASKETBALL}</p>
-                <p>Soccer: {thePark.attributes.SOCCER}</p>
-                <p>Baseball: {thePark.attributes.BASEBALL}</p>
-                <p>Volleyball: {thePark.attributes.VOLLEYBALL}</p>
+                <p>
+                  {Math.floor(
+                    this.props.distanceFunction(
+                      this.props.userLocation.latitude,
+                      this.props.userLocation.longitude,
+                      thePark.attributes.LAT,
+                      thePark.attributes.LON,
+                      "N"
+                    )
+                  )}{" "}
+                  distance away
+                </p>
+                <h3>Sports Available</h3>
+                <h4>{listOfSports}</h4>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Update Park
+                </button>
               </div>
-              <div className="col-12 col-md-6 align-items-center">
+              <div className="col-12 col-md-6 map">
                 <MapComponent
                   lat={thePark.attributes.LAT}
                   lon={thePark.attributes.LON}
@@ -58,12 +124,121 @@ class ParkPage extends React.Component {
                 />
               </div>
             </div>
-            <div className="clearfix"></div>
             <div className="row">
               <div className="col-12">
                 <h3>Events</h3>
-                <div className="d-flex flex-wrap justify-content-center">
-                  {this.eventsAtThisPark()}
+                {/* <div className="d-flex flex-wrap justify-content-center">
+                  <div className="event-card col-12 col-md-5">
+                    <div className="event-card-info">
+                      <h4 className="title">Create a New Event</h4>
+                      <div className="row">
+                        <div className="col-12">
+                          <FontAwesomeIcon icon={faCalendarPlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
+                {this.eventsAtThisPark()}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    Update {thePark.attributes.NAME}
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                <form
+            className="container"
+            onSubmit={e => {
+              this.props.submitParkUpdateFunction(
+                e,
+                this.state.location,
+                this.state.sport,
+                this.state.phone,
+                this.state.user
+              );
+            }}
+          >
+            <br />
+           
+            <h1>{this.props.message}</h1>
+            <label htmlFor="location">Location Name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="location"
+              onChange={this.handleInput}
+              defaultValue={thePark.attributes.NAME}
+            />
+            <label htmlFor="location">Location Address</label>
+            <input
+              className="form-control"
+              type="text"
+              name="location"
+              onChange={this.handleInput}
+              defaultValue={thePark.attributes.ADDRESS}
+            />
+            
+           
+            <label htmlFor="sport">Sport</label>
+            <input
+              className="form-control"
+              type="text"
+              name="sport"
+              onChange={this.handleInput}
+              value={this.state.sport}
+            />
+           
+            <label htmlFor="phone">Phone</label>
+            <input
+              className="form-control"
+              type="text"
+              name="phone"
+              onChange={this.handleInput}
+              defaultValue={thePark.attributes.PHONE}
+            />
+            <label htmlFor="user">User</label>
+            <input
+              className="form-control"
+              type="text"
+              name="user"
+              onChange={this.handleInput}
+              defaultValue={this.state.user}
+            />
+          </form>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Submit changes
+                  </button>
                 </div>
               </div>
             </div>
