@@ -6,6 +6,7 @@ import InfoWindowEx from "./InfoWindowEx";
 import { myHistory } from "../index.js";
 
 import eventImg from "../images/league-map.png";
+import Loading from "./Loading/Loading";
 
 //import images dynamically to the img src value
 function importAll(r) {
@@ -20,7 +21,7 @@ const images = importAll(
   require.context("../images", false, /\.(png|jpe?g|svg)$/)
 );
 
-class SingleEvent extends React.Component {
+class EventPage extends React.Component {
   state = {
     center: {
       lat: 25.7617,
@@ -120,11 +121,11 @@ class SingleEvent extends React.Component {
         </div>
       );
     } else {
-      return <h1>Loading....</h1>;
+      return <Loading />;
     }
   }
 }
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyDZiBSkaZztK2mN3Q8QzvzcfPCsDX2_p58"
-})(SingleEvent);
+})(EventPage);

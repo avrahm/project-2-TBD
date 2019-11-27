@@ -1,5 +1,5 @@
 body {
-  margin: 100px;
+  /* margin: 100px; */
   padding: 0 0 150px 0;
   font-family: Arial Narrow;
   /* background-color: rgba(128, 128, 128, 0.781); */
@@ -47,6 +47,10 @@ body {
 .logo {
   max-width: 300px;
   margin: 20px 0;
+}
+
+.clearfix {
+  clear: both;
 }
 
 .profile-pic {

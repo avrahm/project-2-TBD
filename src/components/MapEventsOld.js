@@ -6,7 +6,7 @@ import { myHistory } from "../index.js";
 import FilterMenu from "./FilterMenu"
 import parkImg from "../images/park-map.png"
 import eventImg from "../images/league-map.png"
-import Loading from "./Loading/loading"
+import Loading from "./Loading/Loading.js"
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -15,10 +15,6 @@ export class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      userLocation: {
-        latitude: 0,
-        longitude: 0
-      },
       showDetailsLink: '',
     };
   }
@@ -51,34 +47,7 @@ export class MapContainer extends Component {
     myHistory.push(this.state.selectedPlaceLink+this.state.selectedPlaceId)
   };
 
-  getLocation = () => {
-    // console.log("get location");
-    let geo_success = position => {
-      this.setState({
-        userLocation: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
 
-        }
-        // center: {
-        //   lat: position.coords.latitude,
-        //   lng: position.coords.longitude
-        // },
-      });
-    };
-
-    let geo_error = () => {
-      console.log("Sorry, no position available.");
-    };
-
-    let geo_options = {
-      enableHighAccuracy: true,
-      maximumAge: 30000,
-      timeout: 7000
-    };
-
-    navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
-  };
 
   render() {
     if (this.props.ready) {
@@ -89,6 +58,10 @@ export class MapContainer extends Component {
           className={"map"}
           zoom={12}
           initialCenter={this.props.center}
+          center={{
+            lat: this.props.userLocation.latitude,
+            lng: this.props.userLocation.longitude
+          }}
         >
           {this.props.parkData.map((place, i) => {
             return (
@@ -118,14 +91,14 @@ export class MapContainer extends Component {
               />
             );
           })}
-          {/* <Marker
+          <Marker
                 key={"User"}
                 name={"User Location"}
                 position={{
-                  lat: this.state.userLocation.latitude,
-                  lng: this.state.userLocation.longitude
+                  lat: this.props.userLocation.latitude,
+                  lng: this.props.userLocation.longitude
                 }}
-              /> */}
+              />
           <InfoWindowEx
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

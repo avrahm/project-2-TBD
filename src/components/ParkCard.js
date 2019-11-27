@@ -14,6 +14,7 @@ export default class ParkCard extends Component {
           </Link>
           Address: {this.props.eachPark.attributes.ADDRESS}
           <p className="contributor">Phone: {this.props.eachPark.attributes.PHONE}</p>
+          {/* Distance away: {this.props.distanceFunction(this.props.userLocation.latitude,this.props.userLocation.longitude,this.props.eachPark.attributes.LAT,this.props.eachPark.attributes.LON,"N")} */}
         </div>
       </div>
         )

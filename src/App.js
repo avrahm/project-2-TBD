@@ -1,22 +1,22 @@
 import React, { Component } from "react";
-import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import axios from "axios";
+import { myHistory } from "./index.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+//Components
+import Header from "./components/Header/Header";
+import SignIn from "./components/SignIn";
+import Loading from "./components/Loading/Loading";
 import ListOfParks from "./components/ListOfParks";
 import ListOfEvents from "./components/ListOfEvents";
 import SinglePark from "./components/SinglePark";
 // import Random from "./components/RandomPark/RandomPark";
 import AddNewEvent from "./components/AddNewEvent";
-import { Switch, Route } from "react-router-dom";
-import Header from "./components/Header/Header";
-import axios from "axios";
 import SingleEvent from "./components/SingleEvent";
-import { myHistory } from "./index.js";
-import Loading from "./components/Loading/loading";
-import SignIn from "./components/SignIn";
-import "bootstrap/dist/css/bootstrap.min.css";
+import SearchMap from "./components/MapEventsOld";
 
 // testing files
 // import FilterTesting from "./components/testing/filtertesting";
-import MapEventsOld from "./components/MapEventsOld";
 
 class App extends Component {
   state = {
@@ -26,7 +26,11 @@ class App extends Component {
     message: "",
     sports: ["soccer", "basketball", "volleyball", "baseball"],
     filteredEvents: [],
-    filteredParks: [],
+    filteredParks: [], 
+    userLocation: {
+      latitude: 0,
+      longitude: 0
+    },
     basketball: true,
     soccer: false,
     yoga: false,
@@ -84,6 +88,27 @@ class App extends Component {
     //   .catch(err => {
     //     console.log(err);
     //   });
+
+    let geo_success = position => {
+      this.setState({
+        userLocation: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        }
+      });
+    };
+
+    let geo_error = () => {
+      console.log("Sorry, no position available.");
+    };
+
+    let geo_options = {
+      enableHighAccuracy: true,
+      maximumAge: 30000,
+      timeout: 7000
+    };
+
+    navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
   }
 
   submitNewEvent = (
@@ -141,6 +166,28 @@ class App extends Component {
       });
   };
 
+  distanceFunction = (lat1, lon1, lat2, lon2, unit)=>{
+    if ((lat1 === lat2) && (lon1 === lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit==="K") { dist = dist * 1.609344 }
+      if (unit==="N") { dist = dist * 0.8684 }
+      return dist;
+    }
+  }
+
   filterFunction = e => {
     let parksFiltered;
     let eventsFiltered;
@@ -187,9 +234,9 @@ class App extends Component {
             {/* testing */}
             <Route
               exact
-              path="/maptesting/"
+              path="/searchmap/"
               render={props => (
-                <MapEventsOld
+                <SearchMap
                   {...props}
                   parkData={this.state.filteredParks}
                   eventData={this.state.filteredEvents}
@@ -197,6 +244,7 @@ class App extends Component {
                   center={{ lat: 25.7617, lng: -80.1918 }}
                   selectedOption={this.state.selectedOption}
                   ready={this.state.ready}
+                  userLocation={this.state.userLocation}
                 />
               )}
             />
@@ -212,6 +260,8 @@ class App extends Component {
                   listOfParks={this.state.theParksFromMiamiDade}
                   listOfEvents={this.state.theEventsFromIronrest}
                   ready={this.state.ready}
+                  userLocation={this.state.userLocation}
+                  distanceFunction={this.distanceFunction}
                 />
               )}
             />
@@ -225,6 +275,7 @@ class App extends Component {
                   ready={this.state.ready}
                   filterFunction={this.filterFunction}
                   selectedOption={this.state.selectedOption}
+                  userLocation={this.state.userLocation}
                 />
               )}
             />

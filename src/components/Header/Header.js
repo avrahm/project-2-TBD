@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMap, faTree, faCalendar, faCalendarPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faMap, faTree, faCalendar, faCalendarPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default class Header extends Component {
   render() {
     return (
       <div className="nav-menu">
-        <Link to="/maptesting/" className="menu-button">
+        <Link to="/searchmap/" className="menu-button">
           <FontAwesomeIcon icon={faMap} className="menu-icon" />
           <br />Map
         </Link>
