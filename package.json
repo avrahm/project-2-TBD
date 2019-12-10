@@ -2,7 +2,7 @@
   "name": "project-2-react-sportsvybe",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://avrahm.github.io/project-2-TBD",
+  "homepage": "https://avrahm.github.io/project-2-TBD/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
