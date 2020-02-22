@@ -4,14 +4,14 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.css";
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 export const myHistory = require("history").createBrowserHistory()
 
 
 ReactDOM.render(
-  <BrowserRouter history={myHistory}>
+  <Router history={myHistory}>
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );
 registerServiceWorker();

@@ -109,7 +109,7 @@ class App extends Component {
       timeout: 7000
     };
 
-    navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
+    navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
   }
 
   submitNewEvent = (
