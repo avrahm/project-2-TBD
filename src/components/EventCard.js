@@ -30,7 +30,7 @@ export default class EventCard extends Component {
   };
   render() {
     return (
-      <div className="event-card col-12 col-md-5" key={this.props.key}>
+      <div className="event-card col-12 col-md-5" >
         <Link to={"/singleevent/" + this.props.eachEvent._id}>
           <div
             className="event-card-heading"

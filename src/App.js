@@ -109,7 +109,7 @@ class App extends Component {
       timeout: 7000
     };
 
-    navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+    navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
   }
 
   submitNewEvent = (
@@ -288,7 +288,6 @@ class App extends Component {
                   parkData={this.state.filteredParks}
                   eventData={this.state.filteredEvents}
                   filterFunction={this.filterFunction}
-                  center={{ lat: 25.7617, lng: -80.1918 }}
                   selectedOption={this.state.selectedOption}
                   ready={this.state.ready}
                   userLocation={this.state.userLocation}

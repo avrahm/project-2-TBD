@@ -23,21 +23,21 @@ export default class ParkCard extends Component {
   render() {
     let listOfSports = [];
     if (this.props.eachPark.attributes.BASKETBALL === "Yes") {
-      listOfSports.push(<FontAwesomeIcon icon={faBasketballBall} />);
+      listOfSports.push(<FontAwesomeIcon icon={faBasketballBall} key={1}/>);
     }
     if (this.props.eachPark.attributes.VOLLEYBALL === "Yes") {
-      listOfSports.push(<FontAwesomeIcon icon={faVolleyballBall} />);
+      listOfSports.push(<FontAwesomeIcon icon={faVolleyballBall} key={2}/>);
     }
     if (this.props.eachPark.attributes.BASEBALL === "Yes") {
-      listOfSports.push(<FontAwesomeIcon icon={faBaseballBall} />);
+      listOfSports.push(<FontAwesomeIcon icon={faBaseballBall} key={3}/>);
     }
     if (this.props.eachPark.attributes.SOCCER === "Yes") {
-      listOfSports.push(<FontAwesomeIcon icon={faFutbol} />);
+      listOfSports.push(<FontAwesomeIcon icon={faFutbol} key={4}/>);
     }
     let parkImg = "park" + [Math.floor(Math.random()*11)] + ".jpg";
 
     return (
-      <div className="event-card col-12 col-md-5" key={this.props.key}>
+      <div className="event-card col-12 col-md-5" >
       
         <div className="event-card-heading" style={{
               backgroundImage:

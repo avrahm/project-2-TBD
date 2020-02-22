@@ -61,16 +61,16 @@ class ParkPage extends React.Component {
       });
       let listOfSports = [];
       if (thePark.attributes.BASKETBALL === "Yes") {
-        listOfSports.push(<FontAwesomeIcon icon={faBasketballBall} />);
+        listOfSports.push(<FontAwesomeIcon icon={faBasketballBall} key={1} />);
       }
       if (thePark.attributes.VOLLEYBALL === "Yes") {
-        listOfSports.push(<FontAwesomeIcon icon={faVolleyballBall} />);
+        listOfSports.push(<FontAwesomeIcon icon={faVolleyballBall} key={2} />);
       }
       if (thePark.attributes.BASEBALL === "Yes") {
-        listOfSports.push(<FontAwesomeIcon icon={faBaseballBall} />);
+        listOfSports.push(<FontAwesomeIcon icon={faBaseballBall} key={3} />);
       }
       if (thePark.attributes.SOCCER === "Yes") {
-        listOfSports.push(<FontAwesomeIcon icon={faFutbol} />);
+        listOfSports.push(<FontAwesomeIcon icon={faFutbol} key={4} />);
       }
       let parkImg = "park" + [Math.floor(Math.random() * 10)] + ".jpg";
 
