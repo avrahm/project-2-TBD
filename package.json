@@ -16,8 +16,6 @@
     "axios-oauth-client": "^1.2.1",
     "axios-token-interceptor": "^0.2.0",
     "bootstrap": "^4.3.1",
-    "eventbrite": "^1.2.2",
-    "firebaseui": "^4.3.0",
     "gh-pages": "^2.1.1",
     "google-map-react": "^1.1.5",
     "google-maps-react": "^2.0.2",

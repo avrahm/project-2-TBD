@@ -27,7 +27,7 @@ export class MapContainer extends Component {
         selectedPlace: props.place_,
         selectedPlaceName: props.place_.attributes.NAME,
         selectedPlaceId: props.place_.attributes.ID,
-        selectedPlaceLink: "/#/singlepark/",
+        selectedPlaceLink: "/singlepark/",
         activeMarker: marker,
         showingInfoWindow: true
       });
