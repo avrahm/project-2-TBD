@@ -1,7 +1,7 @@
 {
   "name": "react-sportsvybe",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "homepage": "http://avrahm.github.io/react-sportsvybe",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
@@ -13,7 +13,7 @@
     "axios-oauth-client": "^1.2.1",
     "axios-token-interceptor": "^0.2.0",
     "bootstrap": "^4.3.1",
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^2.2.0",
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "react": "^16.9.0",

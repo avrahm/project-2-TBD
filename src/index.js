@@ -9,7 +9,7 @@ export const myHistory = require("history").createBrowserHistory()
 
 
 ReactDOM.render(
-  <Router history={myHistory}>
+  <Router history={myHistory} basename={window.location.pathname || ''}>
     <App />
   </Router>,
   document.getElementById("root")
