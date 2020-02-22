@@ -281,6 +281,21 @@ class App extends Component {
             {/* testing */}
             <Route
               exact
+              path="/"
+              render={props => (
+                <SignIn
+                  {...props}
+                  parkData={this.state.filteredParks}
+                  eventData={this.state.filteredEvents}
+                  filterFunction={this.filterFunction}
+                  selectedOption={this.state.selectedOption}
+                  ready={this.state.ready}
+                  userLocation={this.state.userLocation}
+                />
+              )}
+            />
+            <Route
+              exact
               path="/searchmap/"
               render={props => (
                 <SearchMap
