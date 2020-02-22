@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import InfoWindowEx from "./InfoWindowEx";
 import { myHistory } from "../index.js";
@@ -26,7 +27,7 @@ export class MapContainer extends Component {
         selectedPlace: props.place_,
         selectedPlaceName: props.place_.attributes.NAME,
         selectedPlaceId: props.place_.attributes.ID,
-        selectedPlaceLink: "/singlepark/",
+        selectedPlaceLink: "/#/singlepark/",
         activeMarker: marker,
         showingInfoWindow: true
       });
@@ -36,7 +37,7 @@ export class MapContainer extends Component {
       selectedPlace: props.place_,
       selectedPlaceName: props.place_.event.title,
       selectedPlaceId: props.place_._id,
-      selectedPlaceLink: "/singleevent/",
+      selectedPlaceLink: "/#/singleevent/",
       activeMarker: marker,
       showingInfoWindow: true
     });

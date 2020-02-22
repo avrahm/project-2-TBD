@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //Components
 import Header from "./components/Header/Header";
 import SignIn from "./components/SignIn";
-import Loading from "./components/Loading/Loading";
+import Loading from "./components/Loading/Loading.js";
 import ListOfParks from "./components/ListOfParks";
 import ListOfEvents from "./components/ListOfEvents";
 import SinglePark from "./components/SinglePark";

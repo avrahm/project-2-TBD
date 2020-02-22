@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import './loading.css'
+import './Loading.css'
 
-export default class loading extends Component {
+export default class Loading extends Component {
   render() {
     return (
       <div className="bouncing-loader">
