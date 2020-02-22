@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "da7bac8730e8dc8e0b060a7ab191478b",
+    "revision": "153bec027999199b1c36bc3eaeeda42e",
     "url": "/react-sportsvybe/index.html"
   },
   {
-    "revision": "cc7cc74b94d1c17e9c48",
+    "revision": "457220b2703b3d7dfb62",
     "url": "/react-sportsvybe/static/css/2.25d2dfdd.chunk.css"
   },
   {
-    "revision": "23f44ab720bcba1a181b",
+    "revision": "b7fd17a62d55e5b5dc27",
     "url": "/react-sportsvybe/static/css/main.ecccf105.chunk.css"
   },
   {
-    "revision": "cc7cc74b94d1c17e9c48",
-    "url": "/react-sportsvybe/static/js/2.fb1ee16f.chunk.js"
+    "revision": "457220b2703b3d7dfb62",
+    "url": "/react-sportsvybe/static/js/2.bebe04ce.chunk.js"
   },
   {
     "revision": "0e3f26916b9527ec0cbade9368e01f25",
-    "url": "/react-sportsvybe/static/js/2.fb1ee16f.chunk.js.LICENSE.txt"
+    "url": "/react-sportsvybe/static/js/2.bebe04ce.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "23f44ab720bcba1a181b",
-    "url": "/react-sportsvybe/static/js/main.75d2610f.chunk.js"
+    "revision": "b7fd17a62d55e5b5dc27",
+    "url": "/react-sportsvybe/static/js/main.baedea0b.chunk.js"
   },
   {
     "revision": "80398eefc734247d7453",

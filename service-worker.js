@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/react-sportsvybe/precache-manifest.54ff47248e8cc99885e85aae772858a1.js"
+  "/react-sportsvybe/precache-manifest.600449a40a24a1d55f6a0f66f7b06d43.js"
 );
 
 self.addEventListener('message', (event) => {
