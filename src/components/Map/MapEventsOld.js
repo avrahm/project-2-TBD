@@ -2,12 +2,12 @@ import React, { Component } from "react";
 // import { Link } from "react-router-dom";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import InfoWindowEx from "./InfoWindowEx";
-import { myHistory } from "../index.js";
+import { myHistory } from "../../index.js";
 // import UserMarker from "./UserMarker";
-import FilterMenu from "./FilterMenu"
-import parkImg from "../images/park-map.png"
-import eventImg from "../images/league-map.png"
-import Loading from "./Loading/Loading.js"
+import FilterMenu from "../FilterMenu/FilterMenu"
+import parkImg from "../../images/park-map.png"
+import eventImg from "../../images/league-map.png"
+import Loading from "../Loading/Loading.js"
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ export class MapContainer extends Component {
     else if (props.id === "event") {
       this.setState({
         selectedPlace: props.place_,
-        selectedPlaceName: props.place_.event.title,
+        selectedPlaceName: props.place_.title,
         selectedPlaceId: props.place_._id,
         selectedPlaceLink: "/singleevent/",
         activeMarker: marker,
@@ -98,7 +98,7 @@ export class MapContainer extends Component {
                   id={"event"}
                   place_={place}
                   icon={{ url: eventImg }}
-                  position={{ lat: place.event.location.lat, lng: place.event.location.lon }}
+                  position={{ lat: place.location.lat, lng: place.location.lon }}
                 />
               );
             })}

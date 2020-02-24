@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import FilterMenu from "./FilterMenu";
-import EventCard from "./EventCard";
+import FilterMenu from "../FilterMenu/FilterMenu";
+import EventCard from "../EventCard/EventCard";
 
 export default class ListOfEvents extends Component {
   

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MapComponent from "./MapComponent";
-import Loading from "./Loading/Loading";
+import MapComponent from "../Map/MapComponent";
+import Loading from "../Loading/Loading";
 
 //import images dynamically to the img src value
 function importAll(r) {
@@ -13,7 +13,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("../images", false, /\.(png|jpe?g|svg)$/)
+  require.context("../../images", false, /\.(png|jpe?g|svg)$/)
 );
 
 class EventPage extends React.Component {
@@ -24,7 +24,7 @@ class EventPage extends React.Component {
       let theEventDetails = this.props.listOfEvents.find(event => {
         return event._id === this.props.match.params.id;
       });
-      let theEvent = theEventDetails.event;
+      let theEvent = theEventDetails;
       return (
         <div className="event-page">
           <div

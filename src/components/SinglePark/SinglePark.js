@@ -1,7 +1,7 @@
 import React from "react";
-import Loading from "./Loading/Loading.js";
-import EventCard from "./EventCard";
-import MapComponent from "./MapComponent";
+import Loading from "../Loading/Loading.js";
+import EventCard from "../EventCard/EventCard";
+import MapComponent from "../Map/MapComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBasketballBall,
@@ -19,7 +19,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("../images/parks", false, /\.(png|jpe?g|svg)$/)
+  require.context("../../images/parks", false, /\.(png|jpe?g|svg)$/)
 );
 class ParkPage extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class ParkPage extends React.Component {
   //find events for the list of event that match the current park
   eventsAtThisPark = () => {
     let copyOfParkList = this.props.listOfEvents.map((events, i) => {
-      if (events.event.location.id === this.props.match.params.id) {
+      if (events.location.id === this.props.match.params.id) {
         return <EventCard eachEvent={events} key={i} />;
       }
     });

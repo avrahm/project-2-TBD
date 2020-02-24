@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Loading from "./Loading/Loading";
-import FilterMenu from './FilterMenu'
-import ParkCard from "./ParkCard";
+import Loading from "../Loading/Loading";
+import FilterMenu from '../FilterMenu/FilterMenu'
+import ParkCard from "../ParkCard/ParkCard";
 
 
 export default class ListOfParks extends Component {

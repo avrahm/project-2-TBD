@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 // import firebase from 'firebaseui'
-import { myHistory } from "../index";
-import Logo from "../images/logo.png";
-import ProfilePic from "../images/profilepic.png";
+import { myHistory } from "../../index";
+import Logo from "../../images/logo.png";
+import ProfilePic from "../../images/profilepic.png";
 
 export default class SignIn extends Component {
   state = {
@@ -12,14 +12,14 @@ export default class SignIn extends Component {
     this.setState({
       loginPage: false
     });
-    myHistory.push("/searchmap/");
+    myHistory.push("/map/");
   };
   render() {
     return (
       <div 
       className=
       // {this.state.loginPage ? "login" : 
-      "login hide"
+      "login"
     // }
       >
         <div className="login-menu">

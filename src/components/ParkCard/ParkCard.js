@@ -16,7 +16,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("../images/parks", false, /\.(png|jpe?g|svg)$/)
+  require.context("../../images/parks", false, /\.(png|jpe?g|svg)$/)
 );
 export default class ParkCard extends Component {
 

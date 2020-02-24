@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import axios from "axios";
+import Axios from "axios";
 import { myHistory } from "./index.js";
+import baseURL from "./services/base";
 import "bootstrap/dist/css/bootstrap.min.css";
 //Components
 import Header from "./components/Header/Header";
-import SignIn from "./components/SignIn";
+import SignIn from "./components/SignIn/SignIn";
 import Loading from "./components/Loading/Loading.js";
-import ListOfParks from "./components/ListOfParks";
-import ListOfEvents from "./components/ListOfEvents";
-import SinglePark from "./components/SinglePark";
+import ListOfParks from "./components/ListOfParks/ListOfParks";
+import ListOfEvents from "./components/ListOfEvents/ListOfEvents";
+import SinglePark from "./components/SinglePark/SinglePark";
 // import Random from "./components/RandomPark/RandomPark";
-import AddNewEvent from "./components/AddNewEvent";
-import SingleEvent from "./components/SingleEvent";
-import SearchMap from "./components/MapEventsOld";
+import AddNewEvent from "./components/AddNewEvent/AddNewEvent";
+import SingleEvent from "./components/SingleEvent/SingleEvent";
+import SearchMap from "./components/Map/MapEventsOld";
+import Navbar from "./components/Navbar/Navbar.js";
+import SignUp from "./components/SignUp/SignUp.js";
+import Login from "./components/Login/Login.js";
+import Home from "./components/Home/Home.js";
 
 // testing files
 // import FilterTesting from "./components/testing/filtertesting";
@@ -21,13 +26,16 @@ import SearchMap from "./components/MapEventsOld";
 class App extends Component {
   state = {
     theParksFromMiamiDade: null,
-    theEventsFromIronrest: null,
+    eventsFromDB: null,
     ready: false,
     message: "",
+    errorMsg: null,
+    successMsg: null,
+    userLoggedIn: null,
     sports: ["Soccer", "Basketball", "Volleyball", "Baseball"],
-    eventTitleOptions: ["Pick-Up", "League",  "Practice", "Try-Outs"],
+    eventTitleOptions: ["Pick-Up", "League", "Practice", "Try-Outs"],
     filteredEvents: [],
-    filteredParks: [], 
+    filteredParks: [],
     userLocation: {
       latitude: 0,
       longitude: 0
@@ -37,15 +45,21 @@ class App extends Component {
     yoga: false,
     selectedOption: "all",
     eventDescriptionLorem: ["Foul line 4-bagger slide hardball outfielder, rally left on base field. Fair right field 1-2-3 dead red bag passed ball double play. At-bat bleeder warning track starter wins cycle arm reds around the horn. Bunt shift shutout off-speed second base left on base rip sacrifice. Gap robbed outside range right fielder hey batter national pastime wins. Fair first base bunt chin music pine tar hot dog dead ball era astroturf lineup.",
-    "Leadoff airmail team at-bat bunt at-bat field fan. Second baseman earned run sacrifice fly squeeze third base loss second base. World series cup of coffee stadium field 1-2-3, out fastball. Rally ground ball stretch rake sweep stretch left fielder gapper rally. No-hitter sacrifice bunt bag fall classic league second base rip. Cycle rally dodgers friendly confines take butcher boy sacrifice fly.",
-    "Bleeder full count series first baseman contact ground ball outfield. Take astroturf third base cellar fielder's choice line drive can of corn in the hole. Bunt helmet series ground ball peanuts count base on balls. Starter count extra innings choke up left field petey pine tar. Robbed count good eye losses pinch hitter, sabremetrics error. Basehit mound extra innings warning track baseball pitchout rookie blue bush league.",
-    "Cardinals doubleheader nubber sacrifice bunt mitt silver slugger national pastime left fielder mendoza line. No decision assist left field outfield around the horn, 4-bagger swing walk off dodgers. Fair rhubarb run batted in second baseman starting pitcher gapper catcher. Astroturf stretch left field helmet loogy no decision force. Rotation baltimore chop butcher boy suicide squeeze third base slugging bases loaded strikeout play. Strikeout world series baltimore chop robbed second base left fielder line drive.",
-    "Ejection balk bench game grounder ground ball gapper. Forkball grand slam cheese pennant leather tigers bag balk airmail. 1-2-3 range run loogy steal bat wild pitch bench cellar. Grass backstop sport shift second baseman plate foul mendoza line. Full count cork game good eye chin music, team field rally season. League rubber cup of coffee passed ball unearned run outfielder slide warning track."]
+      "Leadoff airmail team at-bat bunt at-bat field fan. Second baseman earned run sacrifice fly squeeze third base loss second base. World series cup of coffee stadium field 1-2-3, out fastball. Rally ground ball stretch rake sweep stretch left fielder gapper rally. No-hitter sacrifice bunt bag fall classic league second base rip. Cycle rally dodgers friendly confines take butcher boy sacrifice fly.",
+      "Bleeder full count series first baseman contact ground ball outfield. Take astroturf third base cellar fielder's choice line drive can of corn in the hole. Bunt helmet series ground ball peanuts count base on balls. Starter count extra innings choke up left field petey pine tar. Robbed count good eye losses pinch hitter, sabremetrics error. Basehit mound extra innings warning track baseball pitchout rookie blue bush league.",
+      "Cardinals doubleheader nubber sacrifice bunt mitt silver slugger national pastime left fielder mendoza line. No decision assist left field outfield around the horn, 4-bagger swing walk off dodgers. Fair rhubarb run batted in second baseman starting pitcher gapper catcher. Astroturf stretch left field helmet loogy no decision force. Rotation baltimore chop butcher boy suicide squeeze third base slugging bases loaded strikeout play. Strikeout world series baltimore chop robbed second base left fielder line drive.",
+      "Ejection balk bench game grounder ground ball gapper. Forkball grand slam cheese pennant leather tigers bag balk airmail. 1-2-3 range run loogy steal bat wild pitch bench cellar. Grass backstop sport shift second baseman plate foul mendoza line. Full count cork game good eye chin music, team field rally season. League rubber cup of coffee passed ball unearned run outfielder slide warning track."]
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.getUser();
+    this.fetchData();
+    this.getUserLocation();
+  }
+
+  fetchData = () => {
     //Miami Dade Parks and Recs JSON API
-    axios
+    Axios
       .get(
         "https://gisweb.miamidade.gov/arcgis/rest/services/Parks/MD_Parks305/MapServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json"
       )
@@ -61,14 +75,16 @@ class App extends Component {
         console.log(err);
       });
 
-    //Events from IronRest
-    axios
-      .get("https://ironrest.herokuapp.com/avrahm")
+    //Events from DB
+    Axios
+      .get(`${baseURL}/api/events`, { withCredentials: true })
+      // `${baseURL}/api/event}`, { withCredentials: true }
+      // https://ironrest.herokuapp.com/avrahm
       .then(res => {
         let x = res.data;
         // console.log(x)
         this.setState({
-          theEventsFromIronrest: x,
+          eventsFromDB: x,
           filteredEvents: x,
           ready: true
         });
@@ -76,20 +92,9 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
 
-    // axios
-    //   .get("http://skateipsum.com/get/1/0/JSON")
-    //   .then(res => {
-    //     let x = res;
-        
-    //     this.setState({
-    //       eventDescriptionLorem: x
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-
+  getUserLocation = () => {
     let geo_success = position => {
       this.setState({
         userLocation: {
@@ -124,32 +129,36 @@ class App extends Component {
   ) => {
     e.preventDefault();
 
-    // let theEventsCopy = {...this.state.theEventsFromIronrest}
+    // let theEventsCopy = {...this.state.eventsFromDB}
     let imgGen = sport.toLowerCase() + Math.floor(Math.random() * 3) + ".jpg";
-    let titleGen = sport +" "+ this.state.eventTitleOptions[Math.floor(Math.random() * 3) ]
+    let titleGen = sport + " " + this.state.eventTitleOptions[Math.floor(Math.random() * 3)]
     const newEvent = {
       title: titleGen,
-      location: location,
       description: description,
+      location: location,
+      user: user,
+      date: date,
       sport: sport,
       img: imgGen,
-      date: date,
       time: time,
-      user: user
+      // status: status
     };
 
-    axios
-      .post("https://ironrest.herokuapp.com/avrahm", { event: newEvent })
+    Axios
+      .post(`${baseURL}/api/event`, newEvent
+        , { withCredentials: true }
+      )
       .then(res => {
-        let eventCopy = [...this.state.theEventsFromIronrest];
+        let eventCopy = [...this.state.eventsFromDB];
         // console.log(res)
         eventCopy.push(res.data.ops[0]);
         // console.log(event)
-        // console.log(res)
+        console.log(res)
+        this.fetchData();
         this.setState(
           {
             message: "Posted Successfully",
-            theEventsFromIronrest: eventCopy
+            eventsFromDB: eventCopy
           },
           () =>
             setTimeout(() => {
@@ -161,7 +170,7 @@ class App extends Component {
         );
       })
       .catch(err => {
-        // console.error(err)
+        // console.error(newEvent)
         this.setState({
           message: "Error!"
         });
@@ -177,7 +186,7 @@ class App extends Component {
   ) => {
     e.preventDefault();
 
-    // let theEventsCopy = {...this.state.theEventsFromIronrest}
+    // let theEventsCopy = {...this.state.eventsFromDB}
     const parkUpdate = {
       location: location,
       sport: sport,
@@ -185,10 +194,10 @@ class App extends Component {
       user: user
     };
 
-    axios
+    Axios
       .post("https://ironrest.herokuapp.com/avrahm", { event: parkUpdate })
       .then(res => {
-        // let eventCopy = [...this.state.theEventsFromIronrest];
+        // let eventCopy = [...this.state.eventsFromDB];
         // console.log(res)
         // eventCopy.push(res.data.ops[0]);
         // console.log(event)
@@ -196,7 +205,7 @@ class App extends Component {
         this.setState(
           {
             message: "Posted Successfully",
-            // theEventsFromIronrest: eventCopy
+            // eventsFromDB: eventCopy
           },
           // () =>
           //   setTimeout(() => {
@@ -215,24 +224,24 @@ class App extends Component {
       });
   };
 
-  distanceFunction = (lat1, lon1, lat2, lon2, unit)=>{
+  distanceFunction = (lat1, lon1, lat2, lon2, unit) => {
     if ((lat1 === lat2) && (lon1 === lon2)) {
       return 0;
     }
     else {
-      var radlat1 = Math.PI * lat1/180;
-      var radlat2 = Math.PI * lat2/180;
-      var theta = lon1-lon2;
-      var radtheta = Math.PI * theta/180;
+      var radlat1 = Math.PI * lat1 / 180;
+      var radlat2 = Math.PI * lat2 / 180;
+      var theta = lon1 - lon2;
+      var radtheta = Math.PI * theta / 180;
       var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
       if (dist > 1) {
         dist = 1;
       }
       dist = Math.acos(dist);
-      dist = dist * 180/Math.PI;
+      dist = dist * 180 / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit==="K") { dist = dist * 1.609344 }
-      if (unit==="N") { dist = dist * 0.8684 }
+      if (unit === "K") { dist = dist * 1.609344 }
+      if (unit === "N") { dist = dist * 0.8684 }
       return dist;
     }
   }
@@ -246,15 +255,15 @@ class App extends Component {
     if (e.target.id === "all") {
       this.setState({
         filteredParks: this.state.theParksFromMiamiDade,
-        filteredEvents: this.state.theEventsFromIronrest,
+        filteredEvents: this.state.eventsFromDB,
         selectedOption: e.target.id
       });
     } else if (e.target.checked === true) {
       parksFiltered = this.state.theParksFromMiamiDade.filter(
         res => res.attributes[sportButton] === "Yes"
       );
-      eventsFiltered = this.state.theEventsFromIronrest.filter(
-        res => res.event.sport.toLowerCase() === e.target.id
+      eventsFiltered = this.state.eventsFromDB.filter(
+        res => res.sport.toLowerCase() === e.target.id
       );
       this.setState({
         filteredParks: parksFiltered,
@@ -265,38 +274,144 @@ class App extends Component {
     } else {
       this.setState({
         filteredParks: this.state.theParksFromMiamiDade,
-        filteredEvents: this.state.theEventsFromIronrest,
+        filteredEvents: this.state.eventsFromDB,
         selectedOption: "all"
       });
     }
+  };
+
+  /**
+   * save the user data to the state
+   */
+  setUser = userObj => {
+    this.setState({
+      userLoggedIn: userObj
+    });
+  };
+
+  /**
+  * make call to server to get the user data and save to set state
+  */
+  getUser = () => {
+    Axios.get(`${baseURL}/api/isLoggedIn`, { withCredentials: true })
+      .then(res => {
+        // if there is a user logged in then fetch the user data and set the state
+        if (res.data) {
+          this.setUser(res.data);
+          this.fetchData();
+          // this.setFeedbackMessage(
+          //   `${res.data.username} successfully logged in`,
+          //   true
+          // );
+          // this.setFeedbackMessage(`${res.data.username} successfully logged in`, true);
+          setTimeout(() => {
+            this.setState({ apiIsAwake: true });
+          }, 2000);
+        } else {
+          // this.setFeedbackMessage(`No user is currently logged in`, false);
+          setTimeout(() => {
+            this.setState({ apiIsAwake: true });
+          }, 2000);
+        }
+        this.setState({ apiIsAwake: true });
+      })
+      .catch(err => {
+        this.setFeedbackMessage(
+          `Failed to verify if there is a user logged in. Error: ${err}`,
+          false
+        );
+      });
+  };
+
+  /**
+   * logout the user from the backend and delete all user data from state
+   */
+  logout = () => {
+    Axios.get(`${baseURL}/api/logout`, { withCredentials: true })
+      .then(res => {
+        this.setUser(null);
+        // this.setState({
+        //   listOfTasks: [],
+        //   filterTaskList: [],
+        //   taskDataIsReady: false
+        // });
+        this.setFeedbackMessage(`${res.data.message}`, true);
+      })
+      .catch(err => {
+        this.setFeedbackMessage(`Failed to logout user. Error: ${err}`, false);
+      });
+  };
+
+  setFeedbackMessage = (message, itIsSuccess) => {
+    if (itIsSuccess) {
+      this.setState({
+        successMsg: message
+      });
+    } else {
+      this.setState({
+        errorMsg: message
+      });
+    }
+
+    // only display message for x amount of time
+    setTimeout(() => {
+      this.setState({
+        errorMsg: null,
+        successMsg: null
+      });
+    }, 3000);
   };
 
   render() {
     if (this.state.ready) {
       return (
         <div className="App">
-          <SignIn />
-          <Header />
+          <Navbar
+            {...this.props}
+            userObj={this.state.userLoggedIn}
+            logout={this.logout}
+            setUser={this.setUser}
+            fetchData={this.fetchData}
+            setFlashMessage={this.setFeedbackMessage}
+          />
+          {/* <SignIn /> */}
+          {/* <Header /> */}
           <Switch>
-            {/* testing */}
             <Route
               exact
               path="/"
+              render={props => (<Home />)} />
+            <Route
+              exact
+              path="/signup/"
               render={props => (
-                <SignIn
+                <SignUp
                   {...props}
-                  parkData={this.state.filteredParks}
-                  eventData={this.state.filteredEvents}
-                  filterFunction={this.filterFunction}
-                  selectedOption={this.state.selectedOption}
                   ready={this.state.ready}
-                  userLocation={this.state.userLocation}
+                  userObj={this.state.userLoggedIn}
+                  setUser={this.setUser}
+                  // fetchData={this.fetchData}
+                  setFlashMessage={this.setFeedbackMessage}
                 />
               )}
             />
             <Route
               exact
-              path="/searchmap/"
+              path="/login/"
+              render={props => (
+                <Login
+                  {...props}
+                  ready={this.state.ready}
+                  userObj={this.state.userLoggedIn}
+                  setUser={this.setUser}
+                  // fetchData={this.fetchData}
+                  setFlashMessage={this.setFeedbackMessage}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/map/"
               render={props => (
                 <SearchMap
                   {...props}
@@ -310,8 +425,6 @@ class App extends Component {
               )}
             />
 
-            {/* end testing */}
-
             <Route
               exact
               path="/singlepark/:id"
@@ -319,7 +432,7 @@ class App extends Component {
                 <SinglePark
                   {...props}
                   listOfParks={this.state.theParksFromMiamiDade}
-                  listOfEvents={this.state.theEventsFromIronrest}
+                  listOfEvents={this.state.eventsFromDB}
                   ready={this.state.ready}
                   userLocation={this.state.userLocation}
                   distanceFunction={this.distanceFunction}
@@ -330,7 +443,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/listpark/"
+              path="/parks/"
               render={props => (
                 <ListOfParks
                   {...props}
@@ -345,7 +458,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/listevent/"
+              path="/events/"
               render={props => (
                 <ListOfEvents
                   {...props}
@@ -362,7 +475,7 @@ class App extends Component {
               render={props => (
                 <SingleEvent
                   {...props}
-                  listOfEvents={this.state.theEventsFromIronrest}
+                  listOfEvents={this.state.eventsFromDB}
                   ready={this.state.ready}
                   message={this.state.message}
                 />
@@ -370,7 +483,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/new/"
+              path="/newevent/"
               render={props => (
                 <AddNewEvent
                   {...props}
@@ -384,6 +497,17 @@ class App extends Component {
               )}
             />
           </Switch>
+          {this.state.successMsg && (
+            <div className="alert alert-success" role="alert">
+              {this.state.successMsg}
+            </div>
+          )}
+
+          {this.state.errorMsg && (
+            <div className="alert alert-danger" role="alert">
+              {this.state.errorMsg}
+            </div>
+          )}
         </div>
       );
     } else {

@@ -6,7 +6,7 @@ import { faMap, faTree, faCalendar, faCalendarPlus } from '@fortawesome/free-sol
 export default class Header extends Component {
   render() {
     return (
-      <div className="nav-menu">
+      <div className="nav-menu hide">
         <Link to="/searchmap/" className="menu-button">
           <FontAwesomeIcon icon={faMap} className="menu-icon" />
           <br />Map

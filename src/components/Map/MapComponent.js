@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import InfoWindowEx from "./InfoWindowEx";
-import { myHistory } from "../index.js";
+import { myHistory } from "../../index.js";
 
 
 class MapComponent extends Component {

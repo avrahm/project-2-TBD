@@ -13,7 +13,7 @@ function importAll(r) {
 }
 
 const images = importAll(
-  require.context("../images", false, /\.(png|jpe?g|svg)$/)
+  require.context("../../images", false, /\.(png|jpe?g|svg)$/)
 );
 export default class EventCard extends Component {
   deleteEvent = e => {
@@ -36,28 +36,28 @@ export default class EventCard extends Component {
             className="event-card-heading"
             style={{
               backgroundImage:
-                "url(" + images[this.props.eachEvent.event.img] + ")"
+                "url(" + images[this.props.eachEvent.img] + ")"
             }}
           ></div>
         </Link>
         <div className="event-card-info">
-          <h4 className="title">{this.props.eachEvent.event.title}</h4>
+          <h4 className="title">{this.props.eachEvent.title}</h4>
           <div className="row">
             <div className="col-6">
               <p className="date flex-row d-flex align-items-center">
                 <FontAwesomeIcon icon={faCalendarAlt} />
-                <span>{this.props.eachEvent.event.date}</span>
+                <span>{this.props.eachEvent.date}</span>
               </p>
               <p className="time flex-row d-flex align-items-center">
                 <FontAwesomeIcon icon={faClock} />
-                <span>{this.props.eachEvent.event.time}</span>
+                <span>{this.props.eachEvent.time}</span>
               </p>
             </div>
             <div className="col-6">
               <h5 className="location-name">
-                {this.props.eachEvent.event.location.name}
+                {this.props.eachEvent.location.name}
               </h5>
-              <h6>{this.props.eachEvent.event.location.address}</h6>
+              <h6>{this.props.eachEvent.location.address}</h6>
             </div>
           </div>
 

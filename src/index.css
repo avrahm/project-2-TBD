@@ -19,14 +19,14 @@ body {
 }
 
 .login {
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #ffffff;
   color: black;
-  z-index: 1050 !important;
+  /* z-index: 1050 !important; */
   display: flex;
   flex-direction: column;
   /* justify-content: flex-start; */
@@ -35,7 +35,7 @@ body {
 }
 
 .login-menu {
-  max-width: 400px;
+  max-width: 450px;
   border: black 1px solid;
   border-radius: 15px;
   /* width: 50%; */
@@ -67,6 +67,14 @@ body {
 
 .hide {
   display: none;
+}
+
+.alert{
+  position: absolute !important;
+  top: 100px !important;
+  right: 40px !important;
+  width: 200px !important;
+  z-index: 5;
 }
 
 .event-card {
